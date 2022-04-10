@@ -1,8 +1,8 @@
 ---
 layout: "post"
-title: "Understanding the backward pass through Batch Normalization Layer"
-date: "2016-02-12 13:54"
-excerpt: "An explanation of gradient flow through BatchNorm-Layer following the circuit representation learned in Standfords class CS231n."
+title: "Creating surfaces with bezier curves"
+date: "2022-04-10 13:00"
+excerpt: "Here we will create surfaces with patches on OpenGL 4.6 with animations."
 comments: true
 ---
 
