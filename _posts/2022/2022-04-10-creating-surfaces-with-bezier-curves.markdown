@@ -7,6 +7,21 @@ comments: true
 image: "/post_assets/0/post_image.png"
 ---
 
+
+In this project, the aim is to create a surface from scratch with bezier curve equations. This will allow us to create animations simply by changing the control points of the surfe we want to create. I will do the computations on the CPU then send the mesh to the GPU with a texture, so this process is not optimal in any means. I used OpenGL 4.6 to implement the project.
+
+## Idea behind the bezier curves and surfaces
+
+## How to create a bezier surface
+
+## How to create patches with G1 continuity 
+
+## The problem of normals
+
+## Debugging a OpenGL program with RenderDoc
+
+## Final words and future work
+
 At the moment there is a wonderful course running at Standford University, called [CS231n - Convolutional Neural Networks for Visual Recognition](http://cs231n.stanford.edu/), held by Andrej Karpathy, Justin Johnson and Fei-Fei Li. Fortunately all the [course material](http://cs231n.stanford.edu/syllabus.html) is provided for free and all the lectures are recorded and uploaded on [Youtube](https://www.youtube.com/playlist?list=PLkt2uSq6rBVctENoVBg1TpCC7OQi31AlC). This class gives a wonderful intro to machine learning/deep learning coming along with programming assignments.
 
 ## Batch Normalization
