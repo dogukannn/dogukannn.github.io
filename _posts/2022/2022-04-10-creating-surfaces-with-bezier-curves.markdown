@@ -4,7 +4,7 @@ title: "Creating surfaces with bezier curves"
 date: "2022-04-10 13:00"
 excerpt: "Here we will create surfaces with patches on OpenGL 4.6 with animations."
 comments: true
-image: "/img/avatar.png"
+image: "/post_assests/0/post_image.png"
 ---
 
 At the moment there is a wonderful course running at Standford University, called [CS231n - Convolutional Neural Networks for Visual Recognition](http://cs231n.stanford.edu/), held by Andrej Karpathy, Justin Johnson and Fei-Fei Li. Fortunately all the [course material](http://cs231n.stanford.edu/syllabus.html) is provided for free and all the lectures are recorded and uploaded on [Youtube](https://www.youtube.com/playlist?list=PLkt2uSq6rBVctENoVBg1TpCC7OQi31AlC). This class gives a wonderful intro to machine learning/deep learning coming along with programming assignments.
