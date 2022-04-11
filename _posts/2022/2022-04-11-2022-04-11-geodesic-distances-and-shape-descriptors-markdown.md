@@ -134,6 +134,7 @@ During my testings, I tested my algorithm in a more complex mesh to find the eff
   <div class="figcaption"><br> The mesh is colored according to their distances to the path between vertices. <br>
   </div>
 </div>
+
 ## Final words
 
 
