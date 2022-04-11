@@ -49,6 +49,13 @@ In our case we saved our meshes into our memory with structures which represents
   </div>
 </div>
 
+The performance of it can vary with the data structure we use for storing distances.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/nxn_dijkstra.png">
+  <div class="figcaption"><br> Difference in timings calculating N x N matrix of shortest distances between vertices.<br>
+  </div>
+</div>
 
 ## Using Geodesic Distances
 
@@ -56,7 +63,11 @@ The properties of the geodesic distances enable us to use it on applications lik
 
 In example in the similarity comparisions, we may need to compare meshes with different rotations, deformations and scaling (like mirroring). If we compare the geodesic distances between these meshes we will see less differences from euclidean distances. 
 
+In this project, we will focus on shape descriptors. 
+
 ## Shape Descriptors 
+
+
 
 ## Geodesic Iso-Curve Signatures
 
