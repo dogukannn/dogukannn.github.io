@@ -25,7 +25,21 @@ We can think a 3D mesh as an undirected weighted graph. In this graph weight of 
 
 ## Ways to find Geodesic Distances between vertices
 
+Thankfully, we have many algorithms to calculate the shortest path between vertices like Dijkstra and Depth-First Search (DFS) etc. These will provide us an easy way to calculate euclidean distance. However, there is a problem. The shortest path on the surface doesn't need to be on the edges between vertices, it can pass through the faces.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/real_shortest_path.png">
+  <div class="figcaption"><br> Comparision between different paths.<br>
+  </div>
+</div>
+
+There are algorithms to better estimate the real shortest path like Fast Marching algortihm, but they are out of scope of this project. 
+
 ## A glance to Dijkstra's shortest path algorithm
+
+In this project, we will use Dijkstra's shortest path algorithm to get the geodesic distances. The input of the algorithm is a source vertex, and the algorithm find the distances between all the other vertices. 
+
+In short, the algorithm starts with 
 
 ## Using Geodesic Distances
 
