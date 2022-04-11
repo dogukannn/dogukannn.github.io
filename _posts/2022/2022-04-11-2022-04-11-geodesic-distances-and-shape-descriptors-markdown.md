@@ -49,7 +49,7 @@ In our case we saved our meshes into our memory with structures which represents
   </div>
 </div>
 
-The performance of it can vary with the data structure we use for storing distances. The main reason behind this is the picking the minimum distance from all the vertices. The types of heap with it's capabilities of getting the minimum element with constant times or faster times can help to speed up things a lot. However, because of the implementation details like pointer calculations, the difference cannot be seen in small sizes or compilation techniques. 
+The performance of it can vary with the data structure we use for storing distances. The main reason behind this is the picking the minimum distance from all the vertices. The types of heap with it's capabilities of getting the minimum element with constant times or faster times can help to speed up things a lot. However, because of the implementation details like pointer calculations, the difference cannot be seen in small sizes or in some compilation techniques. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/1/nxn_dijkstra.png">
@@ -147,5 +147,3 @@ Yusuf Sahillioğlu, Lecture Slides from CENG589 Digital Geometry Processing, Mid
 Gehre, A., Bommes, D., & Kobbelt, L. (2016). Geodesic Iso-Curve Signature. Vision, Modeling & Visualization. The Eurographics Association.
 
 Van Kaick, O., Zhang, H., & Hamarneh, G. (09 2013). Bilateral Maps for Partial Matching. Computer Graphics Forum (CGF). doi:10.1111/cgf.12084
-
-
