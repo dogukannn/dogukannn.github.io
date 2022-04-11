@@ -25,7 +25,7 @@ We can think a 3D mesh as an undirected weighted graph. In this graph weight of 
 
 ## Ways to find Geodesic Distances between vertices
 
-Thankfully, we have many algorithms to calculate the shortest path between vertices like Dijkstra and Depth-First Search (DFS) etc. These will provide us an easy way to calculate euclidean distance. However, there is a problem. The shortest path on the surface doesn't need to be on the edges between vertices, it can pass through the faces.
+Thankfully, we have many algorithms to calculate the shortest path between vertices in weighted graphs like Dijkstra and Depth-First Search (DFS) etc. These will provide us an easy way to calculate euclidean distance. However, there is a problem. The shortest path on the surface doesn't need to be on the edges between vertices, it can pass through the faces.
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/1/real_shortest_path.png">
@@ -39,7 +39,16 @@ There are algorithms to better estimate the real shortest path like Fast Marchin
 
 In this project, we will use Dijkstra's shortest path algorithm to get the geodesic distances. The input of the algorithm is a source vertex, and the algorithm find the distances between all the other vertices. 
 
-In short, the algorithm starts with 
+In short, the algorithm starts with setting all distances from the source vertex with maximum values and the source vertex with 0. In every iteration, we pick the vertex with least distance. After that, we check wheter the neighbour vertices can be reachable from the vertex we pick with shorter path. In these checks we will save the previous vertices to calculate the shortest path in the end.
+
+In our case we saved our meshes into our memory with structures which represents weighted directed graphs. We will just apply the algorithm to find shortest paths to every other vertex.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q1.png">
+  <div class="figcaption"><br> Shortest path drawed on the mesh with red.<br>
+  </div>
+</div>
+
 
 ## Using Geodesic Distances
 
