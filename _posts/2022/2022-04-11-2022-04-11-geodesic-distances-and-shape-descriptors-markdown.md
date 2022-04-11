@@ -19,7 +19,7 @@ We can think a 3D mesh as an undirected weighted graph. In this graph weight of 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/1/geodesic_example.png">
-  <div class="figcaption"><br> Algorithm of Batch Normalization copied from the Paper by Ioffe and Szegedy mentioned above.<br>
+  <div class="figcaption"><br> Red line is geodesic distance and the blue line is the euclidean distance.<br>
   </div>
 </div>
 
