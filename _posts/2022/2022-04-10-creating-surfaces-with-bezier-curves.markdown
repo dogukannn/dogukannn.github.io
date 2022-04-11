@@ -1,10 +1,11 @@
 ---
-layout: "post"
-title: "Creating surfaces with bezier curves"
-date: "2022-04-10 13:00"
-excerpt: "Here we will create surfaces with patches on OpenGL 4.6 with animations."
+layout: post
+title: Creating surfaces with bezier curves
+date: '2022-04-10 13:00'
+excerpt: Here we will create surfaces with patches on OpenGL 4.6 with animations.
 comments: true
-image: "/post_assets/0/post_image.png"
+image: /post_assets/0/post_image.png
+published: false
 ---
 
 
