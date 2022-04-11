@@ -110,7 +110,7 @@ In the paper, after finding the shortest path between these points (dijkstra's a
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/1/q2b.png">
-  <div class="figcaption"><br> The iso-curves of a mesh whose colors are interpolated with respect to their distances to the source vertex.<br>
+  <div class="figcaption"><br> The mesh is colored according to their distances to the path between vertices.<br>
   </div>
 </div>
 
