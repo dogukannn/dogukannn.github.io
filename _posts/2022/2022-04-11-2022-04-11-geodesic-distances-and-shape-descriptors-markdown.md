@@ -117,7 +117,7 @@ In the paper, after finding the shortest path between these points (dijkstra's a
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/1/q2b_chart81.png">
   <img src="/post_assets/1/q2b_chart229.png">
-  <div class="figcaption"><br> The iso-curves of a mesh whose colors are interpolated with respect to their distances to the source vertex.<br>
+  <div class="figcaption"><br> The two end points of our path gives different results. These histograms are our bilateral maps.<br>
   </div>
 </div>
 
