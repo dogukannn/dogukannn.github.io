@@ -108,6 +108,18 @@ The main difference of this method is it uses two points on the surface of the c
 
 In the paper, after finding the shortest path between these points (dijkstra's algorithm is used in our implementaion) we will decide our region of interest. The vertexes which are close to our path is in our region of interest. After this step the area can be filtered in different ways. In our implementation there is no filtering. Finally, we will calculate triangular areas of our region of interest and create an histogram which stores the area which varies with the distance of the our prefered vertex. This choice of the vertex can alter the results. Because of this, `(v1,v2)` is not equal to `(v2,v1)` in the context of this method despite using same path. 
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q2b.png">
+  <div class="figcaption"><br> The iso-curves of a mesh whose colors are interpolated with respect to their distances to the source vertex.<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q2b_chart81.png">
+  <img src="/post_assets/1/q2b_chart229.png">
+  <div class="figcaption"><br> The iso-curves of a mesh whose colors are interpolated with respect to their distances to the source vertex.<br>
+  </div>
+</div>
 
 
 ## Final words
