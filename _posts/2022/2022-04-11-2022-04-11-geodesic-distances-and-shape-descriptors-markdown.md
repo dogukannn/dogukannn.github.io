@@ -17,6 +17,11 @@ In 3D world when we want to calculte the distance between two vertices, we will 
 
 We can think a 3D mesh as an undirected weighted graph. In this graph weight of edges are the distances between vertices. If we find the shortest path between two vertices the distance of the path will be the geodesic distance between these vertices. If we paint these path on our mesh we can clearly see that our path is on the surface. 
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/geodesic_example.png">
+  <div class="figcaption"><br> Algorithm of Batch Normalization copied from the Paper by Ioffe and Szegedy mentioned above.<br>
+  </div>
+</div>
 
 ## Ways to find Geodesic Distances between vertices
 
