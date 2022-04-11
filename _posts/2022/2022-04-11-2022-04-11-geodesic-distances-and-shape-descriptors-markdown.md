@@ -11,4 +11,18 @@ The geodesic distance is the distance between 2 points along the surface of the 
 
 ## Idea behind Geodesic Distances
 
+## Ways to find Geodesic Distances between vertices
+
+## A glance to Dijkstra's shortest path algorithm
+
+## Using Geodesic Distances
+
+## Shape Descriptors 
+
+## Geodesic Iso-Curve Signatures
+
+## Bilateral Maps
+
+## Final words
+
 Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
