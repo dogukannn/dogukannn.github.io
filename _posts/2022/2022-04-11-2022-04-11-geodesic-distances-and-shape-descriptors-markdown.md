@@ -81,6 +81,25 @@ In the next sections, we will dive in some local shape descriptors, which have t
 
 ## Geodesic Iso-Curve Signatures
 
+This method aims to have a local descriptor that improves the correspondence and segmentation quality. The idea behind it is to calculate the total lengths of the iso-curves (curves that will have the same distance to a given point). 
+
+In the paper, there is a method proposed to estimate the length of these curves with finding the faces which the curve will intersect. The total sum of these will be our iso-curve length. In my implementation I used my dijkstra implementation to get the geodesic distances. I found the faces which intersects the iso-curve by checking wheter the edges have the wanted distance value when linearly interpolating them. 
+
+After calculating these distances, If we will put these values to a line graph the result is our geodesic iso-curve signature. 
+
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q2a.png">
+  <div class="figcaption"><br> The iso-curves of a mesh whose colors are interpolated with respect to their distances to the source vertex.<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q2a_chart.png">
+  <div class="figcaption"><br> Geodesic iso-curve signature of our mesh from a vertex from the head.<br>
+  </div>
+</div>
+
 
 
 ## Bilateral Maps
