@@ -71,6 +71,11 @@ To get information about shapes with less data, we need shape descriptors. In no
 
 A good shape descriptor needs to have following properties; fast to compute, intuitive, fully automatic and invariant to transformations. There are many descriptors with some of these properties, but they all have some cons which will come with it. This means, a perfect shape descriptor doesn't exist (yet hopefully).
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/light_field.png">
+  <div class="figcaption"><br> Difference in timings calculating N x N matrix of shortest distances between vertices.<br>
+  </div>
+</div>
 
 In the next sections, we will dive in some local shape descriptors, which have the information from the one vertex or some area of the shapes.
 
