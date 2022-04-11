@@ -96,7 +96,7 @@ After calculating these distances, If we will put these values to a line graph t
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/1/q2a_chart.png">
-  <div class="figcaption"><br> Geodesic iso-curve signature of our mesh from a vertex from the head.<br>
+  <div class="figcaption"><br> Geodesic iso-curve signature of our mesh from a vertex from the head. The y axis show the total length and x axis shows the distance of the iso-curve from the vertex.<br>
   </div>
 </div>
 
