@@ -49,7 +49,7 @@ In our case we saved our meshes into our memory with structures which represents
   </div>
 </div>
 
-The performance of it can vary with the data structure we use for storing distances.
+The performance of it can vary with the data structure we use for storing distances. The main reason behind this is the picking the minimum distance from all the vertices. The types of heap with it's capabilities of getting the minimum element with constant times or faster times can help to speed up things a lot. However, because of the implementation details like pointer calculations, the difference cannot be seen in small sizes or compilation techniques. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/1/nxn_dijkstra.png">
