@@ -121,6 +121,13 @@ In the paper, after finding the shortest path between these points (dijkstra's a
   </div>
 </div>
 
+During my testings, I tested my algorithm in a more complex mesh to find the efficiency. The results were not so good with the array version of the dijkstra's algoritm, but it improved with the heap versions. In the end, I chose a short path, and show the different segments of the ROI in for the histogram.  
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q2b_high_res.png">
+  <div class="figcaption"><br> The different colors stand for different bars of our histogram. <br>
+  </div>
+</div>
 
 ## Final words
 
