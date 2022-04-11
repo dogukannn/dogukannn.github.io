@@ -129,6 +129,11 @@ During my testings, I tested my algorithm in a more complex mesh to find the eff
   </div>
 </div>
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q2b_areas.png">
+  <div class="figcaption"><br> The mesh is colored according to their distances to the path between vertices. <br>
+  </div>
+</div>
 ## Final words
 
 
