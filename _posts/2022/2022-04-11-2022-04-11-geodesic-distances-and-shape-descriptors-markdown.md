@@ -52,6 +52,10 @@ In our case we saved our meshes into our memory with structures which represents
 
 ## Using Geodesic Distances
 
+The properties of the geodesic distances enable us to use it on applications like sampling, shape descriptors and similarity comparisions. 
+
+In example in the similarity comparisions, we may need to compare meshes with different rotations, deformations and scaling (like mirroring). If we compare the geodesic distances between these meshes we will see less differences from euclidean distances. 
+
 ## Shape Descriptors 
 
 ## Geodesic Iso-Curve Signatures
