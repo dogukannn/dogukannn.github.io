@@ -73,7 +73,7 @@ A good shape descriptor needs to have following properties; fast to compute, int
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/1/light_field.png">
-  <div class="figcaption"><br> Difference in timings calculating N x N matrix of shortest distances between vertices.<br>
+  <div class="figcaption"><br> A shape descriptor called light field which uses 10 different angle silhouette images to compare the meshes.<br>
   </div>
 </div>
 
@@ -81,8 +81,13 @@ In the next sections, we will dive in some local shape descriptors, which have t
 
 ## Geodesic Iso-Curve Signatures
 
+
+
 ## Bilateral Maps
+
 
 ## Final words
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+
+## References
+
