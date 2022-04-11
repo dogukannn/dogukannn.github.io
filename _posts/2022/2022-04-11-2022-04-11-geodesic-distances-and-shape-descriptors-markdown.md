@@ -137,6 +137,15 @@ During my testings, I tested my algorithm in a more complex mesh to find the eff
 
 ## Final words
 
+Through the project, the main takeaway is there are many methods to describe and process the mesh. The field of the digital geometry is full of fun subjects like these!
+
 
 ## References
+
+Yusuf Sahillioğlu, Lecture Slides from CENG589 Digital Geometry Processing, Middle East Technical University
+
+Gehre, A., Bommes, D., & Kobbelt, L. (2016). Geodesic Iso-Curve Signature. Vision, Modeling & Visualization. The Eurographics Association.
+
+Van Kaick, O., Zhang, H., & Hamarneh, G. (09 2013). Bilateral Maps for Partial Matching. Computer Graphics Forum (CGF). doi:10.1111/cgf.12084
+
 
