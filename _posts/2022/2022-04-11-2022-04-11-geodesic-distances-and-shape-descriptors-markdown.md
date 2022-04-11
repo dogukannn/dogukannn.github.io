@@ -1,7 +1,11 @@
 ---
-layout: post
-published: false
-title: 2022-04-11-geodesic-distances-and-shape-descriptors.markdown
+layout: "post"
+published: true
+title: "Geodesic distances and Shape Descriptors"
+excerpt: "Here we will examine 3D meshes with geodesic distances and shape descriptors."
+date: "2022-04-11 13:00"
+comments: true
+
 ---
 ## A New Post
 
