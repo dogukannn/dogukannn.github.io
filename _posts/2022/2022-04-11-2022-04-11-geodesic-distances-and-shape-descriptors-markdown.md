@@ -104,6 +104,11 @@ After calculating these distances, If we will put these values to a line graph t
 
 ## Bilateral Maps
 
+The main difference of this method is it uses two points on the surface of the character to define a descriptor. With this approach we can easily define our region of interest for better local shape matching. The region of interest can be further filtered to meet our needs. 
+
+In the paper, after finding the shortest path between these points (dijkstra's algorithm is used in our implementaion) we will decide our region of interest. The vertexes which are close to our path is in our region of interest. After this step the area can be filtered in different ways. In our implementation there is no filtering. Finally, we will calculate triangular areas of our region of interest and create an histogram which stores the area which varies with the distance of the our prefered vertex. This choice of the vertex can alter the results. Because of this, '(v1,v2)' is not equal to '(v2,v1)' in the context of this method despite using same path. 
+
+
 
 ## Final words
 
