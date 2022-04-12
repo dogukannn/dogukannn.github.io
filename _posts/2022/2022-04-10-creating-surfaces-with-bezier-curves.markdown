@@ -125,7 +125,7 @@ The next possible cause is the calculation of the normals. In my normal calculat
   </div>
 </div>
 
-There are many ways to solve this problem, in example we can calculate the normals, after we created all the patches. However, this solution requires changing the main loop and adds complexity to the index calculations. We can solve this with a more intuitive way, we can weight each triangles contribution to the normals with their angle on the wanted vertex. This will solve the normals direction in the edges with more pleasing look. 
+There are many ways to solve this problem, in example we can calculate the normals, after we created all the patches. However, this solution requires changing the main loop and adds complexity to the index calculations. We can solve this with a more intuitive way, we can weight each triangles contribution to the normals with their angle on the wanted vertex. This will solve the normals directions on the edges.
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/after_solve.png">
@@ -133,7 +133,23 @@ There are many ways to solve this problem, in example we can calculate the norma
   </div>
 </div>
 
+## Rotating our surface
+
+Finally, we have flag which animates smoothly. However, to find the best angle we may need to rotate our flag a bit. To change the angle interactively, I implemented a mouse callback which rotates our flag according to a vector which is perpendicular to our mouse's direction vector. It uses quaternions to calculate the rotations before each draw call. In my future projects, I want to work more on the quaternions. 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/rotation.gif">
+  <div class="figcaption"><br> Rotating our surface with mouse. <br>
+  </div>
+</div>
+
 
 ## Final words and future work
+
+We have a good looking flag which can rotate. This project is fun to implement. In the future, I wanted to work more on creating classes in C++ to handle scenes with multiple meshes in more organized way.
+
+## References
+
+Ahmet Oğuz Akyüz, Lecture Slides from CENG469 Computer Graphics II, Middle East Technical University
 
 
