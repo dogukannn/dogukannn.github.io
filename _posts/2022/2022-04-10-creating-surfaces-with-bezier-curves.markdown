@@ -9,15 +9,15 @@ published: true
 ---
 
 
-In this project, the aim is to create a surface from scratch with bezier curve equations. This will allow us to create animations simply by changing the control points of the surfe we want to create. I will do the computations on the CPU then send the mesh to the GPU with a texture, so this process is not optimal in any means. I used OpenGL 4.6 to implement the project.
+In this project, the aim is to create a surface from scratch with bezier curve equations. This will allow us to create animations simply by changing the control points of the surface we want to create. I will do the computations on the CPU and then send the mesh to the GPU with a texture, so this process is not optimal by any means. I used OpenGL 4.6 to implement the project.
 
 ## Idea behind the bezier curves and surfaces
 
-To mimic the nature in Computer Graphics field, we need some functionality to represent smooth shapes. There are many algorithms to do it, but they need to have some properties to be useful. They need to be fast to compute and can be easily designed to model various things. 
+In the Computer Graphics field to mimic nature, we need some functionality to represent smooth shapes. There are many algorithms to do it, but they need to have some properties to be useful. They need to be fast to compute and can be easily designed to model various things. 
 
-A good and balanced way is to use cubic polynomials. Many different usage of these polynomials by their constraints leads to diffetent kinds of curves. The most known versions are, Bezier curves, Hermite curves and splines. The main focus of this project will be Bezier curves.
+A good and balanced way is to use cubic polynomials. Many different uses of these polynomials by their constraints lead to different kinds of curves. The most known versions are Bezier curves, Hermite curves, and splines. The main focus of this project will be Bezier curves.
 
-Bezier curves are defined with 4 points, the first and the last one are the start and end points of our curve. The intermediate ones are for the direction of the curve in between steps. With these ponts and linearly interpolating multiple lines, we will have our Bezier curve. The curve is defined in the convex hull of these control points. This property can help us in some applications like robotics, or game development where we need to estimate the boundaries of our path without calculating the whole curve.
+Bezier curves are defined with 4 points, the first and the last one are the start and endpoints of our curve. The intermediate ones are for the direction of the curve in-between steps. With these points and linearly interpolating multiple lines, we will have our Bezier curve. The curve is defined in the convex hull of these control points. This property can help us in some applications like robotics, or game development where we need to estimate the boundaries of our path without calculating the whole curve.
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/bezier.gif">
@@ -33,7 +33,7 @@ Bezier curves are defined with 4 points, the first and the last one are the star
 
 ## How to create a bezier surface
 
-We had our curve in our hand, to make it a surface we need to add a new dimension to our curve. If we define our control points of our curve as another Bezier curves, if we sample these infinite curve cluster with a wanted rate we will have a point cloud which represents a surface.
+We had our curve in our hands, to make it a surface we need to add a new dimension to the curve. If we define the control points of our curve as other Bezier curves, if we sample these infinite curve clusters with a wanted rate we will have a point cloud that represents a surface.
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/bezier_surface.png">
@@ -41,7 +41,7 @@ We had our curve in our hand, to make it a surface we need to add a new dimensio
   </div>
 </div>
 
-In a way, we have 4 curves in each direction which spawns from the control points of the curve. This means with total 16 points, we can define a bezier surface which can be easily adjustable for our needs.
+In a way, we have 4 curves in each direction that spawn from the control points of the curve. This means with a total of 16 points, we can define a bezier surface that can be easily adjustable for our needs.
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/bezier_surface_control_points.png">
@@ -49,7 +49,7 @@ In a way, we have 4 curves in each direction which spawns from the control point
   </div>
 </div>
 
-I started my implementation with defining these surface equations as matrix calculations. With these matrices we can easily sample our points in wanted intervals. I created three different matrices for each dimension `(x,y,z)` with 16 different control points. After that, I defined Bezier curves base matrix which comes from the wanted control points interpolation in polynomials. Then with the following equations we can sample our points through the two directions which we created our curves on in the interval `u x w = [0,1]x[0,1]`. 
+I started my implementation by defining these surface equations as matrix calculations. With these matrices, we can easily sample our points in wanted intervals. I created three different matrices for each dimension `(x,y,z)` with 16 different control points. After that, I defined the Bezier curves base matrix which comes from the wanted control points interpolation in polynomials. Then with the following equations, we can sample our points through the two directions in which we created our curves on in the interval `u x w = [0,1]x[0,1]`. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/bezier_equations.png">
@@ -57,7 +57,7 @@ I started my implementation with defining these surface equations as matrix calc
   </div>
 </div>
 
-After creating matrices, I simply iterated with wanted sample counts, and I weave them as triangles. I used a basic normal calculation in vertices which averages the neighbour faces normals in the end. 
+After creating matrices, I simply iterated with wanted sample counts, and I weave them as triangles. I used a basic normal calculation in vertices which averages the neighbor faces normals in the end. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/my_first_surface.png">
@@ -67,13 +67,13 @@ After creating matrices, I simply iterated with wanted sample counts, and I weav
 
 ## How to create patches with G1 continuity 
 
-We now have a dull surface. We can add some patches and animate the surface to shake things up. The animation part is easy, because we can easily change the control points. However, the 16 control paints may not be suitable for someone's needs. To increase our control points, we can implement the same are with more than 1 Bezier surface equations, namely patches. And finally I added some texture to it to mimic a flag wawing in a windy weather. 
+We now have a dull surface. We can add some patches and animate the surface to shake things up. The animation part is easy because we can easily change the control points. However, the 16 control paints may not be suitable for someone's needs. To increase our control points, we can implement the same with more than 1 Bezier surface equation, namely patches. And finally, I added some texture to it to mimic a flag waving in windy weather. 
 
-We want some contiunity with the surface, no one wants a surface wiith holes on it. The concept is easy on the core level. For the first level of contiunity we need to have merge the control points of the borders. Where one surface ends, the other one should start.
+We want some continuity with the surface, no one wants a surface with holes on it. The concept is easy on the core level. For the first level of continuity, we need to merge the control points of the borders. Where one surface ends, the other one should start.
 
-We can do more than just connecting control points. In the context of the curves, next level is the keeping the same tangent in the both ends, but in surfaces we can ease this down a bit. We can be sure to have the control points before the edge, on the edge, and after the edge in the next patch on the same line. This continuity is called G1 continuity. This will help us to have a smoother surface. This one is already ensured if we create a surface with all control points on the same plane. However, we want to animate this surface this can move the control points out of the plane. 
+We can do more than just connect control points. In the context of the curves, the next level is keeping the same tangent on both ends, but on surfaces, we can ease this down a bit. We can be sure to have the control points before the edge, on the edge, and after the edge in the next patch on the same line. This continuity is called G1 continuity. This will help us to have a smoother surface. This one is already ensured if we create a surface with all control points on the same plane. However, we want to animate this surface so this can move the control points out of the plane. 
 
-To solve this issue, I animated the control points in a way that the G1 continuity is preserved. I created my patches on the `x-y` plane and if I move one control point before the edge on the `z` axis, I move the control point after the edge by the inversed amount. This ensures that the slope before and after an edge is same. 
+To solve this issue, I animated the control points in a way that the G1 continuity is preserved. I created my patches on the `x-y` plane and if I move one control point before the edge on the `z` axis, I move the control point after the edge by the inversed amount. This ensures that the slope before and after an edge is the same. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/edge.png">
@@ -81,11 +81,11 @@ To solve this issue, I animated the control points in a way that the G1 continui
   </div>
 </div>
 
-In this picture you can immediately notice, there are artifacts present in the edges between patches. We will inspect this problem in the following sections. 
+In this picture, you can immediately notice that there are artifacts present on the edges between patches. We will inspect this problem in the following sections. 
 
 ## Debugging an OpenGL program with RenderDoc
 
-Before moving on the our artifact problem, I want to talk about a program I found to debug graphical programs which uses OpenGL, DirectX or Vulkan. The name of the application is [RenderDoc](https://renderdoc.org). In it you can view different meshes that rendered in a scene, you can see the events happened through the rendering process and you can get important information about shaders, or even decompile them. 
+Before moving on to the artifact problem, I want to talk about a program I found to debug graphical programs which use OpenGL, DirectX, or Vulkan. The name of the application is [RenderDoc](https://renderdoc.org). In it you can view different meshes that are rendered in a scene, you can see the events that happened through the rendering process and you can get important information about shaders, or even decompile them. 
 
 You launch an application with the application and then you capture the frames you wanted to inspect.
 
@@ -105,7 +105,7 @@ You launch an application with the application and then you capture the frames y
   </div>
 </div>
 
-The shader informations helped me in this assignment to solve a problem while loading the textures. And viewing my triangles. 
+The shader information helped me in this assignment to solve a problem while loading the textures. And viewing my triangles. 
 
 ## The problem of normals
 
@@ -115,9 +115,9 @@ The shader informations helped me in this assignment to solve a problem while lo
   </div>
 </div>
 
-In this problem I first thought the reason is because of some problems with intersecting triangles, because I loaded edge vertices more than once. The reason behind this is I created each patch independently. However, In the RenderDoc's mesh viewer I saw that the triangles seems fine. 
+In this problem, I first thought the reason is because of some problems with intersecting triangles because I loaded edge vertices more than once. The reason behind this is I created each patch independently. However, In the RenderDoc's mesh viewer I saw that the triangles seem fine. 
 
-The next possible cause is the calculation of the normals. In my normal calculation I also calculate them for each patch. I found out that my averaging method is the problem. In the edge vertices normals will curve towards a side because of the triangle count is not equal in each side. This is not a problem in the other vertices because the symmetry of the triangles cancel out each other.  
+The next possible cause is the calculation of the normals. In my normal calculation, I also calculate them for each patch. I found out that my averaging method is the problem. In the edge vertices, normals will curve towards the left or right because the triangle count is not equal on each side. This is not a problem in the other vertices because the symmetry of the triangles cancels out each other.  
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/angles.png">
@@ -125,7 +125,7 @@ The next possible cause is the calculation of the normals. In my normal calculat
   </div>
 </div>
 
-There are many ways to solve this problem, in example we can calculate the normals, after we created all the patches. However, this solution requires changing the main loop and adds complexity to the index calculations. We can solve this with a more intuitive way, we can weight each triangles contribution to the normals with their angle on the wanted vertex. This will solve the normals directions on the edges.
+There are many ways to solve this problem, in the example, we can calculate the normals after we created all the patches. However, this solution requires changing the main loop and adds complexity to the index calculations. We can solve this more intuitively, we can weigh each triangle's contribution to the normals with their angle on the wanted vertex. This will solve the directions of the normals on the edges.
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/after_solve.png">
@@ -135,7 +135,7 @@ There are many ways to solve this problem, in example we can calculate the norma
 
 ## Rotating our surface
 
-Finally, we have flag which animates smoothly. However, to find the best angle for the best look we may need to rotate our flag a bit. To change the angle interactively, I implemented a mouse callback which rotates our flag according to a vector which is perpendicular to our mouse's direction vector. It uses quaternions to calculate the rotations before each draw call. In my future projects, I want to work more on the quaternions. 
+Finally, we have a flag that animates smoothly. However, to find the best angle for the best look we may need to rotate our flag a bit. To change the angle interactively, I implemented a mouse callback that rotates our flag according to a vector that is perpendicular to our mouse's direction vector. It uses quaternions to calculate the rotations before each draw call. In my future projects, I want to work more on the quaternions. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/rotation.gif">
@@ -146,7 +146,7 @@ Finally, we have flag which animates smoothly. However, to find the best angle f
 
 ## Final words and future work
 
-We have a good looking flag which can rotate. This project is fun to implement. In the future, I wanted to work more on creating classes in C++ to handle scenes with multiple meshes in more organized way.
+We have a good-looking flag that can rotate. This project is fun to implement. In the future, I wanted to work more on creating classes in C++ to handle scenes with multiple meshes in a more organized way.
 
 ## References
 
