@@ -85,7 +85,7 @@ In this picture you can immediately notice, there are artifacts present in the e
 
 ## Debugging an OpenGL program with RenderDoc
 
-Before moving on the our artifact problem, I want to talk about a program I found to debug graphical programs which uses OpenGL, DirectX or Vulkan. The name of the application is RenderDoc. 
+Before moving on the our artifact problem, I want to talk about a program I found to debug graphical programs which uses OpenGL, DirectX or Vulkan. The name of the application is [RenderDoc](https://renderdoc.org). 
 
 ## The problem of normals
 
