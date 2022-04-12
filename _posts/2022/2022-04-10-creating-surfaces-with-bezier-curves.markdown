@@ -5,7 +5,7 @@ date: '2022-04-10 13:00'
 excerpt: Here we will create surfaces with patches on OpenGL 4.6 with animations.
 comments: true
 image: /post_assets/0/post_image.png
-published: false
+published: true
 ---
 
 
@@ -85,12 +85,71 @@ In this picture you can immediately notice, there are artifacts present in the e
 
 ## Debugging an OpenGL program with RenderDoc
 
-Before moving on the our artifact problem, I want to talk about a program I found to debug graphical programs which uses OpenGL, DirectX or Vulkan. The name of the application is RenderDoc. 
+Before moving on the our artifact problem, I want to talk about a program I found to debug graphical programs which uses OpenGL, DirectX or Vulkan. The name of the application is [RenderDoc](https://renderdoc.org). In it you can view different meshes that rendered in a scene, you can see the events happened through the rendering process and you can get important information about shaders, or even decompile them. 
+
+You launch an application with the application and then you capture the frames you wanted to inspect.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/render_doc_0.png">
+  <div class="figcaption"><br> Capturing frames from our application.<br>
+  </div>
+</div>
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/render_doc_1.png">
+  <div class="figcaption"><br> Mesh viewer interface of the RenderDoc. <br>
+  </div>
+</div>
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/render_doc_2.png">
+  <div class="figcaption"><br> Shader pipeline viewer of the RenderDoc.<br>
+  </div>
+</div>
+
+The shader informations helped me in this assignment to solve a problem while loading the textures. And viewing my triangles. 
 
 ## The problem of normals
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/edge_zoomed_in.png">
+  <div class="figcaption"><br> The zoomed version of our problem.<br>
+  </div>
+</div>
+
+In this problem I first thought the reason is because of some problems with intersecting triangles, because I loaded edge vertices more than once. The reason behind this is I created each patch independently. However, In the RenderDoc's mesh viewer I saw that the triangles seems fine. 
+
+The next possible cause is the calculation of the normals. In my normal calculation I also calculate them for each patch. I found out that my averaging method is the problem. In the edge vertices normals will curve towards a side because of the triangle count is not equal in each side. This is not a problem in the other vertices because the symmetry of the triangles cancel out each other.  
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/angles.png">
+  <div class="figcaption"><br> The angles of the vertices showing our problem.<br>
+  </div>
+</div>
+
+There are many ways to solve this problem, in example we can calculate the normals, after we created all the patches. However, this solution requires changing the main loop and adds complexity to the index calculations. We can solve this with a more intuitive way, we can weight each triangles contribution to the normals with their angle on the wanted vertex. This will solve the normals directions on the edges.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/after_solve.png">
+  <div class="figcaption"><br> The edge artifacts disappeared. <br>
+  </div>
+</div>
+
+## Rotating our surface
+
+Finally, we have flag which animates smoothly. However, to find the best angle we may need to rotate our flag a bit. To change the angle interactively, I implemented a mouse callback which rotates our flag according to a vector which is perpendicular to our mouse's direction vector. It uses quaternions to calculate the rotations before each draw call. In my future projects, I want to work more on the quaternions. 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/rotation.gif">
+  <div class="figcaption"><br> Rotating our surface with mouse. <br>
+  </div>
+</div>
 
 
 ## Final words and future work
+
+We have a good looking flag which can rotate. This project is fun to implement. In the future, I wanted to work more on creating classes in C++ to handle scenes with multiple meshes in more organized way.
+
+## References
+
+Ahmet Oğuz Akyüz, Lecture Slides from CENG469 Computer Graphics II, Middle East Technical University
 
 
