@@ -67,9 +67,29 @@ After creating matrices, I simply iterated with wanted sample counts, and I weav
 
 ## How to create patches with G1 continuity 
 
+We now have a dull surface. We can add some patches and animate the surface to shake things up. The animation part is easy, because we can easily change the control points. However, the 16 control paints may not be suitable for someone's needs. To increase our control points, we can implement the same are with more than 1 Bezier surface equations, namely patches. And finally I added some texture to it to mimic a flag wawing in a windy weather. 
+
+We want some contiunity with the surface, no one wants a surface wiith holes on it. The concept is easy on the core level. For the first level of contiunity we need to have merge the control points of the borders. Where one surface ends, the other one should start.
+
+We can do more than just connecting control points. In the context of the curves, next level is the keeping the same tangent in the both ends, but in surfaces we can ease this down a bit. We can be sure to have the control points before the edge, on the edge, and after the edge in the next patch on the same line. This continuity is called G1 continuity. This will help us to have a smoother surface. This one is already ensured if we create a surface with all control points on the same plane. However, we want to animate this surface this can move the control points out of the plane. 
+
+To solve this issue, I animated the control points in a way that the G1 continuity is preserved. I created my patches on the `x-y` plane and if I move one control point before the edge on the `z` axis, I move the control point after the edge by the inversed amount. This ensures that the slope before and after an edge is same. 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/edge.png">
+  <div class="figcaption"><br> A surface constructed from multiple patches.<br>
+  </div>
+</div>
+
+In this picture you can immediately notice, there are artifacts present in the edges between patches. We will inspect this problem in the following sections. 
+
+## Debugging an OpenGL program with RenderDoc
+
+Before moving on the our artifact problem, I want to talk about a program I found to debug graphical programs which uses OpenGL, DirectX or Vulkan. The name of the application is RenderDoc. 
+
 ## The problem of normals
 
-## Debugging a OpenGL program with RenderDoc
+
 
 ## Final words and future work
 
