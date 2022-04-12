@@ -135,7 +135,7 @@ There are many ways to solve this problem, in example we can calculate the norma
 
 ## Rotating our surface
 
-Finally, we have flag which animates smoothly. However, to find the best angle we may need to rotate our flag a bit. To change the angle interactively, I implemented a mouse callback which rotates our flag according to a vector which is perpendicular to our mouse's direction vector. It uses quaternions to calculate the rotations before each draw call. In my future projects, I want to work more on the quaternions. 
+Finally, we have flag which animates smoothly. However, to find the best angle for the best look we may need to rotate our flag a bit. To change the angle interactively, I implemented a mouse callback which rotates our flag according to a vector which is perpendicular to our mouse's direction vector. It uses quaternions to calculate the rotations before each draw call. In my future projects, I want to work more on the quaternions. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/rotation.gif">
