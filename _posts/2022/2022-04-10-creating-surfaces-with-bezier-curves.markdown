@@ -37,7 +37,7 @@ We had our curve in our hand, to make it a surface we need to add a new dimensio
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/bezier_surface.png">
-  <div class="figcaption"><br> Blending function of Bezier curves which shows the effect of the control points through the curve.<br>
+  <div class="figcaption"><br> <br>
   </div>
 </div>
 
@@ -45,7 +45,15 @@ In a way, we have 4 curves in each direction which spawns from the control point
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/bezier_surface_control_points.png">
-  <div class="figcaption"><br> Blending function of Bezier curves which shows the effect of the control points through the curve.<br>
+  <div class="figcaption"><br> <br>
+  </div>
+</div>
+
+I started my implementation with defining these surface equations as matrix calculations. With these matrices we can easily sample our points in wanted intervals. 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/my_first_surface.png">
+  <div class="figcaption"><br> My first implementation with 10 sample points.<br>
   </div>
 </div>
 
