@@ -17,7 +17,19 @@ To mimic the nature in Computer Graphics field, we need some functionality to re
 
 A good and balanced way is to use cubic polynomials. Many different usage of these polynomials by their constraints leads to diffetent kinds of curves. The most known versions are, Bezier curves, Hermite curves and splines. The main focus of this project will be Bezier curves.
 
+Bezier curves are defined with 4 points, the first and the last one are the start and end points of our curve. The intermediate ones are for the direction of the curve in between steps. With these ponts and linearly interpolating multiple lines, we will have our Bezier curve. The curve is defined in the convex hull of these control points. This property can help us in some applications like robotics, or game development where we need to estimate the boundaries of our path without calculating the whole curve.
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/bezier.gif">
+  <div class="figcaption"><br> Interpolation of the Bezier curve.<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/blending-functions-bezier.png">
+  <div class="figcaption"><br> Interpolation of the Bezier curve.<br>
+  </div>
+</div>
 
 ## How to create a bezier surface
 
