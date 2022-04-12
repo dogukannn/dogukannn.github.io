@@ -4,6 +4,7 @@ published: true
 title: Geodesic Distances and Shape Descriptors
 excerpt: Here we will examine 3D meshes with geodesic distances and shape descriptors.
 date: '2022-04-11 13:00'
+image: /post_assets/1/post_image.png
 comments: true
 ---
 
