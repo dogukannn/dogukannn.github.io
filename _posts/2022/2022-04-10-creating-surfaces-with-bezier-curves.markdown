@@ -41,7 +41,13 @@ We had our curve in our hand, to make it a surface we need to add a new dimensio
   </div>
 </div>
 
+In a way, we have 4 curves in each direction which spawns from the control points of the curve. This means with total 16 points, we can define a bezier surface which can be easily adjustable for our needs.
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/bezier_surface_control_points.png">
+  <div class="figcaption"><br> Blending function of Bezier curves which shows the effect of the control points through the curve.<br>
+  </div>
+</div>
 
 ## How to create patches with G1 continuity 
 
