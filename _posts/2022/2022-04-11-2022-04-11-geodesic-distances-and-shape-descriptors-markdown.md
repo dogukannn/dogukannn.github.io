@@ -49,7 +49,7 @@ In our case we saved our meshes into our memory with structures which represents
   </div>
 </div>
 
-The performance of it can vary with the data structure we use for storing distances. The main reason behind this is the picking the minimum distance from all the vertices. The types of heap with it's capabilities of getting the minimum element with constant times or faster times can help to speed up things a lot. However, because of the implementation details like pointer calculations, the difference cannot be seen in small sizes or compilation techniques. 
+The performance of it can vary with the data structure we use for storing distances. The main reason behind this is the picking the minimum distance from all the vertices. The types of heap with it's capabilities of getting the minimum element with constant times or faster times can help to speed up things a lot. However, because of the implementation details like pointer calculations, the difference cannot be seen in small sizes or in some compilation techniques. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/1/nxn_dijkstra.png">
@@ -67,12 +67,83 @@ In this project, we will focus on shape descriptors.
 
 ## Shape Descriptors 
 
+To get information about shapes with less data, we need shape descriptors. In normal settings, we will save the vertex positions and indices of a mesh. This can help us to know the shape, but it can get too hard to comprehend with large numbers of faces. 
 
+A good shape descriptor needs to have following properties; fast to compute, intuitive, fully automatic and invariant to transformations. There are many descriptors with some of these properties, but they all have some cons which will come with it. This means, a perfect shape descriptor doesn't exist (yet hopefully).
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/light_field.png">
+  <div class="figcaption"><br> A shape descriptor called light field which uses 10 different angle silhouette images to compare the meshes.<br>
+  </div>
+</div>
+
+In the next sections, we will dive in some local shape descriptors, which have the information from the one vertex or some area of the shapes.
 
 ## Geodesic Iso-Curve Signatures
 
+This method aims to have a local descriptor that improves the correspondence and segmentation quality. The idea behind it is to calculate the total lengths of the iso-curves (curves that will have the same distance to a given point). 
+
+In the paper, there is a method proposed to estimate the length of these curves with finding the faces which the curve will intersect. The total sum of these will be our iso-curve length. In my implementation I used my dijkstra implementation to get the geodesic distances. I found the faces which intersects the iso-curve by checking wheter the edges have the wanted distance value when linearly interpolating them. 
+
+After calculating these distances, If we will put these values to a line graph the result is our geodesic iso-curve signature. 
+
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q2a.png">
+  <div class="figcaption"><br> The iso-curves of a mesh whose colors are interpolated with respect to their distances to the source vertex.<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q2a_chart.png">
+  <div class="figcaption"><br> Geodesic iso-curve signature of our mesh from a vertex from the head. The y axis show the total length and x axis shows the distance of the iso-curve from the vertex.<br>
+  </div>
+</div>
+
+
+
 ## Bilateral Maps
+
+The main difference of this method is it uses two points on the surface of the character to define a descriptor. With this approach we can easily define our region of interest for better local shape matching. The region of interest can be further filtered to meet our needs. 
+
+In the paper, after finding the shortest path between these points (dijkstra's algorithm is used in our implementaion) we will decide our region of interest. The vertexes which are close to our path is in our region of interest. After this step the area can be filtered in different ways. In our implementation there is no filtering. Finally, we will calculate triangular areas of our region of interest and create an histogram which stores the area which varies with the distance of the our prefered vertex. This choice of the vertex can alter the results. Because of this, `(v1,v2)` is not equal to `(v2,v1)` in the context of this method despite using same path. 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q2b.png">
+  <div class="figcaption"><br> The mesh is colored according to their distances to the path between vertices.<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q2b_chart81.png">
+  <img src="/post_assets/1/q2b_chart229.png">
+  <div class="figcaption"><br> The two end points of our path gives different results. These histograms are our bilateral maps.<br>
+  </div>
+</div>
+
+During my testings, I tested my algorithm in a more complex mesh to find the efficiency. The results were not so good with the array version of the dijkstra's algoritm, but it improved with the heap versions. In the end, I chose a short path, and show the different segments of the ROI in for the histogram.  
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q2b_areas.png">
+  <div class="figcaption"><br> The different colors stand for different bars of our histogram. <br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/1/q2b_high_res.png">
+  <div class="figcaption"><br> The mesh is colored according to their distances to the path between vertices. <br>
+  </div>
+</div>
 
 ## Final words
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+Through the project, the main takeaway is there are many methods to describe and process the mesh. The field of the digital geometry is full of fun subjects like these!
+
+
+## References
+
+Yusuf Sahillioğlu, Lecture Slides from CENG589 Digital Geometry Processing, Middle East Technical University
+
+Gehre, A., Bommes, D., & Kobbelt, L. (2016). Geodesic Iso-Curve Signature. Vision, Modeling & Visualization. The Eurographics Association.
+
+Van Kaick, O., Zhang, H., & Hamarneh, G. (09 2013). Bilateral Maps for Partial Matching. Computer Graphics Forum (CGF). doi:10.1111/cgf.12084
