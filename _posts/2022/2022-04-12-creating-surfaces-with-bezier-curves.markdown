@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Creating surfaces with bezier curves
+title: Creating surfaces with Bezier curves
 date: '2022-04-12 18:00'
 excerpt: Here we will create surfaces with patches on OpenGL 4.6 with animations.
 comments: true
