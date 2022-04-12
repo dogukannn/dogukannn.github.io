@@ -13,6 +13,12 @@ In this project, the aim is to create a surface from scratch with bezier curve e
 
 ## Idea behind the bezier curves and surfaces
 
+To mimic the nature in Computer Graphics field, we need some functionality to represent smooth shapes. There are many algorithms to do it, but they need to have some properties to be useful. They need to be fast to compute and can be easily designed to model various things. 
+
+A good and balanced way is to use cubic polynomials. Many different usage of these polynomials by their constraints leads to diffetent kinds of curves. The most known versions are, Bezier curves, Hermite curves and splines. The main focus of this project will be Bezier curves.
+
+
+
 ## How to create a bezier surface
 
 ## How to create patches with G1 continuity 
