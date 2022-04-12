@@ -49,7 +49,7 @@ In a way, we have 4 curves in each direction which spawns from the control point
   </div>
 </div>
 
-I started my implementation with defining these surface equations as matrix calculations. With these matrices we can easily sample our points in wanted intervals. I created three different matrices for each dimension `(x,y,z)` with 16 different control points. After that, I defined Bezier curves base matrix which comes from the wanted control points interpolation in polynomials. Then with the following equations we can sample our points through the two directions which we created our curves on in the interval `s x t = [0,1]x[0,1]`. 
+I started my implementation with defining these surface equations as matrix calculations. With these matrices we can easily sample our points in wanted intervals. I created three different matrices for each dimension `(x,y,z)` with 16 different control points. After that, I defined Bezier curves base matrix which comes from the wanted control points interpolation in polynomials. Then with the following equations we can sample our points through the two directions which we created our curves on in the interval `u x w = [0,1]x[0,1]`. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/bezier_equations.png">
@@ -57,7 +57,7 @@ I started my implementation with defining these surface equations as matrix calc
   </div>
 </div>
 
-After creating matrices, I simply iterated with wanted sample counts, and I weave them as triangles. I used a basic normal calculation in vertices which averages the neighbour faces normals in the start. 
+After creating matrices, I simply iterated with wanted sample counts, and I weave them as triangles. I used a basic normal calculation in vertices which averages the neighbour faces normals in the end. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/my_first_surface.png">
