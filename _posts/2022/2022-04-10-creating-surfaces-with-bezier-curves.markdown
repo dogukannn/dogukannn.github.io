@@ -109,15 +109,30 @@ The shader informations helped me in this assignment to solve a problem while lo
 
 ## The problem of normals
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/edge_zoomed_in.png">
+  <div class="figcaption"><br> The zoomed version of our problem.<br>
+  </div>
+</div>
+
 In this problem I first thought the reason is because of some problems with intersecting triangles, because I loaded edge vertices more than once. The reason behind this is I created each patch independently. However, In the RenderDoc's mesh viewer I saw that the triangles seems fine. 
 
 The next possible cause is the calculation of the normals. In my normal calculation I also calculate them for each patch. I found out that my averaging method is the problem. In the edge vertices normals will curve towards a side because of the triangle count is not equal in each side. This is not a problem in the other vertices because the symmetry of the triangles cancel out each other.  
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/angles.png">
-  <div class="figcaption"><br> Shader pipeline viewer of the RenderDoc..<br>
+  <div class="figcaption"><br> The angles of the vertices showing our problem.<br>
   </div>
 </div>
+
+There are many ways to solve this problem, in example we can calculate the normals, after we created all the patches. However, this solution requires changing the main loop and adds complexity to the index calculations. We can solve this with a more intuitive way, we can weight each triangles contribution to the normals with their angle on the wanted vertex. This will solve the normals direction in the edges with more pleasing look. 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/after_solve.png">
+  <div class="figcaption"><br> The edge artifacts disappeared. <br>
+  </div>
+</div>
+
 
 ## Final words and future work
 
