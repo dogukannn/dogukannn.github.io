@@ -27,7 +27,7 @@ Bezier curves are defined with 4 points, the first and the last one are the star
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/0/blending-functions-bezier.png">
-  <div class="figcaption"><br> Interpolation of the Bezier curve.<br>
+  <div class="figcaption"><br> Blending function of Bezier curves which shows the effect of the control points through the curve.<br>
   </div>
 </div>
 
