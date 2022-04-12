@@ -33,6 +33,17 @@ Bezier curves are defined with 4 points, the first and the last one are the star
 
 ## How to create a bezier surface
 
+We had our curve in our hand, to make it a surface we need to add a new dimension to our curve. If we define our control points of our curve as another Bezier curves, if we sample these infinite curve cluster with a wanted rate we will have a point cloud which represents a surface.
+
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/0/bezier_surface.png">
+  <div class="figcaption"><br> Blending function of Bezier curves which shows the effect of the control points through the curve.<br>
+  </div>
+</div>
+
+
+
 ## How to create patches with G1 continuity 
 
 ## The problem of normals
