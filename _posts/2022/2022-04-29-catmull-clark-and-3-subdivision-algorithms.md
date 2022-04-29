@@ -4,7 +4,7 @@ title: Catmull–Clark and √3 Subdivision Algorithms
 date: '2022-04-29 12:00'
 excerpt: Here we will dive into subdivision algorithms.
 published: true
-image: /post_assets/2/c-cube-1.png
+image: /post_assets/2/post_image.png
 comments: true
 
 ---
