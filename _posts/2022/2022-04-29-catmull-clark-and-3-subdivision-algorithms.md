@@ -86,12 +86,30 @@ To solve this problem I implemented a check whether the vertex is on a hole edge
 
 However, as seen in the picture the hole edges can't be smoothed because of the wrong neighbour informations after my solution. In the end I think not creating holes after iterations is generating more plausible meshes. 
 
+The next images are other examples with the Catmull-Clark algorithm.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/heart-catmull-one-image.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/space-station-one-image.png">
+  <div class="figcaption"><br>Because of the complexity of the shape, the subdivision is not as visible as the other ones.<br>
+  </div>
+</div>
+
 
 ## √3 Subdivision
 
 The √3 subdivision is an alogrithm works with triangular meshes, the algorithm is a improved version of the 1-to-4 split operation which divides triangle faces to four triangle faces by adding new vertices to the middle of edges of the face. The improvements are the contiunity on the limit surfaces of the output being mostly C2 and handling sharp feature lines in a better way.
 
-//INSERT 3 SUBDIVISION IMAGE
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/3-subdiv.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
 
 The algorithm is very intuitive and simple.
  - For every face, we will add a new vertex which is the center point of the triangle and connect the triangle points with the center point and create three new edges
