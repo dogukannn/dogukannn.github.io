@@ -24,19 +24,37 @@ The algorithm simply defined with 4 different iterations on the elements of the 
 - In the beginning, for each face a face point created which is the center of the mass of the face. 
 - In the second iteration, for each edge an edge point is created which is the average of the neighbour faces face points and edges center point. 
 - In the next iteration, the vertex positions are updated according to following formula,
-	
-// INSERT FORMULA PNG
 
-The d are the original vertices coordinates. R means the average of the neighbour edge points, and S means the average of the neighbour face points. The result will be a formulated weighted average of these points. 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/formula.png">
+  <div class="figcaption"><br> The d are the original vertices coordinates. R means the average of the neighbour edge points, and S means the average of the neighbour face points. The result will be a formulated weighted average of these points.<br>
+  </div>
+</div>
 
 - In the final iteration, for each old face we define 4 new faces with the order like (old vertex, edge point, face point, edge point). For each old vertex we will have a new quad and we discard the old faces.
 
 
 In the end we will left with a smoother new mesh which consists 3 times more quads than the base mesh.
 
-// INSERT EXAMPLE IMAGES
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/c-cube-1.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/c-cube-2.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
 
 We can see the cube turns into a sphere like shape. However, it is not a perfect square because it can be experessed quadratic polynomials. 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/c-cube-3.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
 
 We can see the total area is steadily decreasing as the shape turns into a smoother one.
 
