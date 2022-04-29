@@ -56,6 +56,35 @@ However, as seen in the picture the hole edges can't be smoothed because of the 
 
 ## √3 Subdivision
 
+The √3 subdivision is an alogrithm works with triangular meshes, the algorithm is a improved version of the 1-to-4 split operation which divides triangle faces to four triangle faces by adding new vertices to the middle of edges of the face. The improvements are the contiunity on the limit surfaces of the output being mostly C2 and handling sharp feature lines in a better way.
+
+//INSERT 3 SUBDIVISION IMAGE
+
+The algorithm is very intuitive and simple.
+ - For every face, we will add a new vertex which is the center point of the triangle and connect the triangle points with the center point and create three new edges
+ 
+ - Then we will relax (relocate the vertices according to their neighbours) the original vertices with a weighted formula 
+ 
+ //INSERT WEIGHTED FORMULA
+ 
+ - In the end we will just flip the original edges in the base mesh which results in a smoother mesh with 2 times more triangles. The reason behind this number is that we create three faces from each face.
+ 
+ 
+While implementing this algorithm the relaxation part is also created unwanted holes. I solved this via checking wheter the vertex is a in a edges which is hole edge. If the vertex is a hole vertex, I didn't relax the positions of the vertex which solves the problem of unwanted holes during the iterations.
+
+// INSERT EXAMPLES 
+ 
+
 ## Final Notes
 
+While implementing these algorithms, I used flat shading to show the change of the primitives. In every iteration which increases the face number, caused a more natural and realistic shading. The reason behind this is these algorithms smooths the shapes while keeping their look, with this way we can improve the shading by calculating the colors in a more detailed way. This property can be used in games, where for example if you approach a mesh, it can be subdivided to give the natural lightning feeling to it. 
+
+
 ## References
+
+Leif Kobbelt. 2000. √3-subdivision. In Proceedings of the 27th annual conference on Computer graphics and 		interactive techniques (SIGGRAPH '00). ACM Press/Addison-Wesley Publishing Co., USA, 103–112. 				https://doi.org/10.1145/344779.344835
+
+E. Catmull, J. Clark,Recursively generated B-spline surfaces on arbitrary topological meshes, Computer-Aided 	Design, Volume 10, Issue 6, 1978, Pages 350-355, ISSN 0010-4485, 
+   https://doi.org/10.1016/0010-4485(78)90110-0.
+
+
