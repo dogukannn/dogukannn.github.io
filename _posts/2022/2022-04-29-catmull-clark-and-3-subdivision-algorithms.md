@@ -86,5 +86,7 @@ Leif Kobbelt. 2000. √3-subdivision. In Proceedings of the 27th annual conferen
 
 E. Catmull, J. Clark,Recursively generated B-spline surfaces on arbitrary topological meshes, Computer-Aided 	Design, Volume 10, Issue 6, 1978, Pages 350-355, ISSN 0010-4485, 
    https://doi.org/10.1016/0010-4485(78)90110-0.
+   
+Yusuf Sahillioğlu, Lecture Slides from CENG589 Digital Geometry Processing, Middle East Technical University
 
 
