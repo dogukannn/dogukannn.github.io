@@ -32,7 +32,26 @@ The d are the original vertices coordinates. R means the average of the neighbou
 - In the final iteration, for each old face we define 4 new faces with the order like (old vertex, edge point, face point, edge point). For each old vertex we will have a new quad and we discard the old faces.
 
 
-In the end we will left with a smoother new mesh which consists
+In the end we will left with a smoother new mesh which consists 3 times more quads than the base mesh.
+
+// INSERT EXAMPLE IMAGES
+
+We can see the cube turns into a sphere like shape. However, it is not a perfect square because it can be experessed quadratic polynomials. 
+
+We can see the total area is steadily decreasing as the shape turns into a smoother one.
+
+## Problem with holes
+
+While working on the algorithm, I notices some shapes are giving some weird results. For example the heart mesh is generating holes after the iterations. After some debugging I noticed that the given mesh points is not fully constructing a perfect two manifold mesh. This causes to algorithm thinking the the edges which are not supposed to be hole edges as holes. 
+
+
+// INSERT HEART WITH HOLE
+
+To solve this problem I implemented a check whether the vertex is on a hole edge or not. If the vertex on the hole edge, I calculated its positions such that it doesn't generate holes after the iterations.
+
+// INSERT HEART WITHOUT HOLE
+
+However, as seen in the picture the hole edges can't be smoothed because of the wrong neighbour informations after my solution. In the end I think not creating holes after iterations is generating more plausible meshes. 
 
 ## √3 Subdivision
 
