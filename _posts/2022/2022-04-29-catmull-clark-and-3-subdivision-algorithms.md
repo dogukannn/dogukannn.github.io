@@ -4,6 +4,9 @@ published: true
 title: Catmull–Clark and √3 Subdivision Algorithms
 date: '2022-04-29 19:00'
 image: post_assets/2/c-cube-1.png
+excerpt: Here we will dive into subdivision algorithms.
+comments: true
+
 ---
 Subdivision algorithms generate new meshes by dividing the faces and changing the locations of the vertices from the base polygonal meshes. It can preserve or smooth out the current shape of the meshes. The algorithms without changing the vertex locations exists, but they are less common. The main examples are Loop subdivision, Doo-Sabin subdivision, Catmull-Clark subdivision and 3 subdivision. In this project, we will see the Catmull-Clark and 3 subdivision and see the differences between them with examples implemented in C++ with the help of the OpenGL.
 
