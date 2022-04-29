@@ -127,7 +127,23 @@ The algorithm is very intuitive and simple.
  
 While implementing this algorithm the relaxation part is also created unwanted holes. I solved this via checking wheter the vertex is a in a edges which is hole edge. If the vertex is a hole vertex, I didn't relax the positions of the vertex which solves the problem of unwanted holes during the iterations.
 
-// INSERT EXAMPLES 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/bunny-three.png">
+  <div class="figcaption"><br>The decrease of total surface area exists in this algorithm too.<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/cup-three.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/dragon-three.png">
+  <div class="figcaption"><br>We can see from the iterations that holes are handled.<br>
+  </div>
+</div>
  
 
 ## Final Notes
