@@ -53,6 +53,7 @@ To solve this problem I implemented a check whether the vertex is on a hole edge
 
 However, as seen in the picture the hole edges can't be smoothed because of the wrong neighbour informations after my solution. In the end I think not creating holes after iterations is generating more plausible meshes. 
 
+
 ## √3 Subdivision
 
 ## Final Notes
