@@ -64,12 +64,25 @@ We can see the total area is steadily decreasing as the shape turns into a smoot
 
 While working on the algorithm, I notices some shapes are giving some weird results. For example the heart mesh is generating holes after the iterations. After some debugging I noticed that the given mesh points is not fully constructing a perfect two manifold mesh. This causes to algorithm thinking the the edges which are not supposed to be hole edges as holes. 
 
-
-// INSERT HEART WITH HOLE
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/heart-with-hole.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
 
 To solve this problem I implemented a check whether the vertex is on a hole edge or not. If the vertex on the hole edge, I calculated its positions such that it doesn't generate holes after the iterations.
 
-// INSERT HEART WITHOUT HOLE
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/heart-without-hole.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/heart-without-hole-from-bottom.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
 
 However, as seen in the picture the hole edges can't be smoothed because of the wrong neighbour informations after my solution. In the end I think not creating holes after iterations is generating more plausible meshes. 
 
