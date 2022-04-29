@@ -116,7 +116,11 @@ The algorithm is very intuitive and simple.
  
  - Then we will relax (relocate the vertices according to their neighbours) the original vertices with a weighted formula 
  
- //INSERT WEIGHTED FORMULA
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/2/3-subdiv-formula.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
  
  - In the end we will just flip the original edges in the base mesh which results in a smoother mesh with 2 times more triangles. The reason behind this number is that we create three faces from each face.
  
