@@ -6,7 +6,6 @@ excerpt: Here we will dive into subdivision algorithms.
 published: true
 image: /post_assets/2/post_image.png
 comments: true
-
 ---
 Subdivision algorithms generate new meshes by dividing the faces and changing the locations of the vertices from the base polygonal meshes. It can preserve or smooth out the current shape of the meshes. The algorithms without changing the vertex locations exists, but they are less common. The main examples are Loop subdivision, Doo-Sabin subdivision, Catmull-Clark subdivision and 3 subdivision. In this project, we will see the Catmull-Clark and 3 subdivision and see the differences between them with examples implemented in C++ with the help of the OpenGL.
 
@@ -53,7 +52,7 @@ In the end we will left with a smoother new mesh which consists 3 times more qua
   </div>
 </div>
 
-We can see the cube turns into a sphere like shape. However, it is not a perfect square because it can be experessed quadratic polynomials. 
+We can see the cube turns into a sphere like shape. However, it is not a perfect sphere because it can be experessed quadratic polynomials. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/2/c-cube-3.png">
@@ -162,5 +161,3 @@ E. Catmull, J. Clark,Recursively generated B-spline surfaces on arbitrary topolo
    https://doi.org/10.1016/0010-4485(78)90110-0.
    
 Yusuf Sahillioğlu, Lecture Slides from CENG589 Digital Geometry Processing, Middle East Technical University
-
-
