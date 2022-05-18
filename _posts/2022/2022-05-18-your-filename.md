@@ -1,7 +1,7 @@
 ---
 layout: post
 published: false
-title: ''
+title: Creating Reflections with OpenGL
 ---
 ## Introduction to Cubemaps
 
