@@ -35,6 +35,18 @@ We can use real life equirectangular projection (panorama) images to create cube
   </div>
 </div>
 
+After that we can easily use this cubemap in our OpenGL programs to create skyboxes. Implementation is quite easy with the following steps.
+- First, we create a cube mesh around our camera and make sure that cube doesn't move or rotate when our camere moves. This will give the effect of a far landscape.
+- Then, we will make sure to render the cube with the cubemap texture which we loaded from a file using the 3D texture lookup functions in fragment shader. While rendering we should turn off the depth testing to make sure that the cubemap is always in the background.
+
+In the end we will have a lovely background of a scene which we can easily look around.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/3/cubemaprotate.gif">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
 
 ## Dynamic Cubemaps for Reflections
 
