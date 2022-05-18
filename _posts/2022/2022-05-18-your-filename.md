@@ -21,6 +21,21 @@ The cubemaps can be created beforehand to represent some backgrounds in computer
 
 ## Creating a Skybox
 
+We can use real life equirectangular projection (panorama) images to create cubemaps. To do so we create a special mapping which calculates the spherical coordinates of the pixels on the cubemap. Then we take these spherical coordinates then lookup the related pixels using a interpolation method in the equirectangular projection images.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/3/hdr.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/3/tocubemap.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
+
 ## Dynamic Cubemaps for Reflections
 
 ## Final Thoughts
