@@ -1,7 +1,11 @@
 ---
 layout: post
-published: false
+published: true
 title: Creating Reflections with OpenGL
+date: '2022-05-18 12:00'
+image: /post_assets/3/post_image.png
+excerpt: Here we will glance into cubemaps and their use cases.
+comments: true
 ---
 In this project we will see how can we create reflective surfaces on modern OpenGL without the help of raytracing. To do so we will use a technique called cube mapping to map the environment to a texture. We will also see some other cool-effects we can achieve with cubemaps.
 
