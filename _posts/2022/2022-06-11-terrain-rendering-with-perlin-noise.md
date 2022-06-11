@@ -170,7 +170,26 @@ In my implementation I first thought to recreating the square which we are curre
   </div>
 </div>
 
+After implementing the camera I implement some parameters to change the number of triangles and the size of the surface we wanted to render.
 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/low_poly.png">
+  <div class="figcaption"><br>Low poly version of our surface.<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/height_scaled.png">
+  <div class="figcaption"><br>I also scaled the height outputs from perlin noise to experiment a little.<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/high_freq.png">
+  <div class="figcaption"><br>High frequency surface from our new camera.<br>
+  </div>
+</div>
 
 ## Final Words
 
