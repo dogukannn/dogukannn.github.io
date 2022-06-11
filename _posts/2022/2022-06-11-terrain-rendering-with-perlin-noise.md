@@ -128,6 +128,13 @@ When I see this shape, first I noticed that the diagonals. After some thinking, 
 </div>
 
 <div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/grads.png">
+  <div class="figcaption"><br>Gradient vectors after shuffle.<br>
+  </div>
+</div>
+
+
+<div class="fig figcenter fighighlight">
   <img src="/post_assets/4/from_up.png">
   <div class="figcaption"><br>A resulting surface which colorized according to the y values of the positions.<br>
   </div>
