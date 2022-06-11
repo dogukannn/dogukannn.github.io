@@ -53,4 +53,4 @@ To achieve this kind of effect on our programs we need pseudo-random algorithms 
 
 ## Final Words
 
-Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
+
