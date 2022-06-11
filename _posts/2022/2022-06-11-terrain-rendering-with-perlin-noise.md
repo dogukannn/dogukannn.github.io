@@ -93,10 +93,20 @@ In the next section we will apply these randomness in our surface as height valu
 
 While creating our beatiful surface, I just tossed the perlin noise function into the height values of the triangles that we created on our geometry shader. 
 
-However, while creating our noise function I missed a crucial step. While selecting g
+However, while creating our noise function I missed a crucial step. While selecting gradient vectors from a list, I used the code below which takes the floor of our position and then with these values takes modulo and in each step we hope the randomize the result. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/4/idx_code.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
+I did thought that the code above is enough to create a random values, the little that I know it wasn't enough. Let's have a look at what is wrong.
+
+In my index code I use a index array to shuffle things more.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/no-shuffle.png">
   <div class="figcaption"><br><br>
   </div>
 </div>
