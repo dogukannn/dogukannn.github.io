@@ -160,6 +160,18 @@ Here are the results of different frequencies.
 
 ## Example Camera Movement
 
+Looking the surface from sky is good, but we can do something better we can ride our car in these surface. Or at least we can simulate the vision of the ride. We can achieve this by calculating the same noise on the CPU side and change the camera parameters according to that. 
+
+In my implementation I first thought to recreating the square which we are currently on on the CPU, but I noticed that this is unneccessary. I only need to height value of a step ahead on my direction. Thus, I calculated the height of my current position and the summation of my current position and my direction vector to calculate my new direction. 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/ride.gif">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
+
+
 ## Final Words
 
 
