@@ -193,4 +193,10 @@ After implementing the camera I implement some parameters to change the number o
 
 ## Final Words
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/image_nowf.png">
+  <div class="figcaption"><br>A final rendered surface.<br>
+  </div>
+</div>
 
+While implementing this project, I noticed that creating random stuff on our computers is actually impossible due to their nature. However, for the visual applications the randomness we get from these different kind of algorithms is enough. In my future projects, I want to try these different algorithms on some other applications like smoke or cloud rendering. 
