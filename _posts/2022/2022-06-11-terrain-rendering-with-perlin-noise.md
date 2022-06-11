@@ -25,7 +25,15 @@ Besides from the performance issues, we still need a way to create these good lo
 
 ## Noise
 
+Noise mostly refers to many types of random and troublesome siganls or noises. In our case we need it to create random things happen in our deterministic computers.
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/3/noise.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
+We need some kind of randomness while creating realistic things, because the nature is fully-random. From the scattering of leaves to the movements of the insects. 
 
 
 ## Perlin Noise
