@@ -157,12 +157,6 @@ Here are the results of different frequencies.
   </div>
 </div>
 
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/4/wireframe_from_up.png">
-  <div class="figcaption"><br>Wireframe version of the same surface.<br>
-  </div>
-</div>
-
 
 ## Example Camera Movement
 
