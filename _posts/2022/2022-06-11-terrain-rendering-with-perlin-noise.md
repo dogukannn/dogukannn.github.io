@@ -141,6 +141,29 @@ When I see this shape, first I noticed that the diagonals. After some thinking, 
 
 ## Different Frequencies of Same Noise
 
+While trying to implement the perlin noise algoritm I wondered that what happens If I don't want to have too bumpy surface. To solve this issue I searched and find out that we can change the frequency of the noise function with scaling down or up the position values itself before putting them into the perlin noise algorithm.
+
+Here are the results of different frequencies.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/high_freq_from_up.png">
+  <div class="figcaption"><br>High frequency perlin noise.<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/low_freq_from_up.png">
+  <div class="figcaption"><br>Low frequency perlin noise.<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/wireframe_from_up.png">
+  <div class="figcaption"><br>Wireframe version of the same surface.<br>
+  </div>
+</div>
+
+
 ## Example Camera Movement
 
 ## Final Words
