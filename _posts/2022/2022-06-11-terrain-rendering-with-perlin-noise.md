@@ -10,7 +10,7 @@ comments: true
 In this project we will see how can we render procedural terrains using OpenGL with Perlin Noise. To optimize these calculations we will use geometry shaders to generate terrain on our GPU.
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/3/post_image.png">
+  <img src="/post_assets/4/post_image.png">
   <div class="figcaption"><br><br>
   </div>
 </div>
@@ -28,7 +28,7 @@ Besides from the performance issues, we still need a way to create these good lo
 Noise mostly refers to many types of random and troublesome siganls or noises. In our case we need it to create random things happen in our deterministic computers.
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/3/noise.png">
+  <img src="/post_assets/4/noise.png">
   <div class="figcaption"><br><br>
   </div>
 </div>
@@ -36,12 +36,12 @@ Noise mostly refers to many types of random and troublesome siganls or noises. I
 We need some kind of randomness while creating realistic things, because the nature is fully-random. From the scattering of leaves to the distrubition of moss on a wall. 
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/3/random.png">
+  <img src="/post_assets/4/random.png">
   <div class="figcaption"><br><br>
   </div>
 </div>
 
-
+To achieve this kind of effect on our programs we need pseudo-random algorithms which are not fully random algorithms but trying to achieve same results in our deterministic computers. In this project we will use Perlin Noise which is introcu
 
 ## Perlin Noise
 
