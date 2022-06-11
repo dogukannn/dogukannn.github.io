@@ -138,6 +138,7 @@ When I see this shape, first I noticed that the diagonals. After some thinking, 
   <div class="figcaption"><br>Wireframe version of the same surface.<br>
   </div>
 </div>
+
 ## Different Frequencies of Same Noise
 
 ## Example Camera Movement
