@@ -41,7 +41,7 @@ We need some kind of randomness while creating realistic things, because the nat
   </div>
 </div>
 
-To achieve this kind of effect on our programs we need pseudo-random algorithms which are not fully random algorithms but trying to achieve same results in our deterministic computers. In this project we will use Perlin Noise which is introcu
+To achieve this kind of effect on our programs we need pseudo-random algorithms which are not fully random algorithms but trying to achieve same results in our deterministic computers. In this project we will use Perlin Noise which is introcuded by Ken Perlin in 1983.
 
 ## Perlin Noise
 
