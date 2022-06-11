@@ -103,13 +103,23 @@ However, while creating our noise function I missed a crucial step. While select
 
 I did thought that the code above is enough to create a random values, the little that I know it wasn't enough. Let's have a look at what is wrong.
 
-In my index code I use a index array to shuffle things more.
+In my index code I use a index array to shuffle things more. So I just insterted these values in ascending order like below. 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/4/no-shuffle.png">
   <div class="figcaption"><br><br>
   </div>
 </div>
+
+However, in my implementation I got a result which can called repetitive. 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/grads_repeating.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
+
 
 ## Different Frequencies of Same Noise
 
