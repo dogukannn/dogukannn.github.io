@@ -15,6 +15,8 @@ title: Terrain Rendering with Perlin Noise
 
 ## Different Frequencies of Same Noise
 
+## Example Camera Movement
+
 ## Final Words
 
 Enter text in [Markdown](http://daringfireball.net/projects/markdown/). Use the toolbar above, or click the **?** button for formatting help.
