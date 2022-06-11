@@ -65,12 +65,25 @@ Perlin Noise is a procedural pseudo-random texture generation algorithm to impro
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/4/perlin.png">
+  <div class="figcaption"><br> A texture output of perlin noise algorithm.<br>
+  </div>
+</div>
+
+The algorihm generates the output in two steps. The first step is choosing gradients from a precomputed selections. We select these gradient vectors for each vertex of our imaginary grid.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/grid.png">
   <div class="figcaption"><br><br>
   </div>
 </div>
 
+In the next step we put our input into the grid and calculate the weights of these gradients and accumulate the result of the dot product of these vectors with the difference vectors with the weights that we have calculated.
 
-
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/grad_weight.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
 
 Perlin noise is a procedural texture primitive, a type of gradient noise used by visual effects artists to increase the appearance of realism in computer graphics. The function has a pseudo-random appearance, yet all of its visual details are the same size. This property allows it to be readily controllable; multiple scaled copies of Perlin noise can be inserted into mathematical expressions to create a great variety of procedural textures. Synthetic textures using Perlin noise are often used in CGI to make computer-generated visual elements – such as object surfaces, fire, smoke, or clouds – appear more natural, by imitating the controlled random appearance of textures in nature.
 
