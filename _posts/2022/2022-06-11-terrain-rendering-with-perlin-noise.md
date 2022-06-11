@@ -3,7 +3,7 @@ layout: post
 published: false
 title: Terrain Rendering with Perlin Noise
 ---
-
+In this project we will see how can we render procedural terrains using OpenGL with the help of Geometry Shaders and Perlin Noise. 
 
 ## Terrain Rendering
 
