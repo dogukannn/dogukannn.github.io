@@ -51,7 +51,11 @@ In our case we need a basic surface consists triangles. To do that we can use so
 
 The solution is making a single point draw call with an instance count. This call will create multiple copies of our point and will send them to our shaders. To differentiate and place them in their position, we need a way to know which point we are handling. The shader has a built in variable for instanced draw calls just for that. With our basic algorithm in the geometry shader we can easily turn our multiple copies of same point into a surface with triangular faces.
 
-
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/basic_surface.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
 
 ## Perlin Noise
 
