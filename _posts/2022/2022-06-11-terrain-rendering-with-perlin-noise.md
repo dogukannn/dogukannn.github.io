@@ -96,7 +96,7 @@ While creating our beatiful surface, I just tossed the perlin noise function int
 However, while creating our noise function I missed a crucial step. While selecting g
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/4/grad_weight.png">
+  <img src="/post_assets/4/idx_code.png">
   <div class="figcaption"><br><br>
   </div>
 </div>
