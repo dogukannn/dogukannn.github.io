@@ -41,9 +41,21 @@ We need some kind of randomness while creating realistic things, because the nat
   </div>
 </div>
 
-To achieve this kind of effect on our programs we need pseudo-random algorithms which are not fully random algorithms but trying to achieve same results in our deterministic computers. In this project we will use Perlin Noise which is introcuded by Ken Perlin in 1983.
+To achieve this kind of effect on our programs we need pseudo-random algorithms which are not fully random algorithms but trying to achieve same results in our deterministic computers. In this project we will use Perlin Noise which is introcuded by Ken Perlin in 1983. Before introducing the Perlin Noise I want to talk about how can we create our surfaces in GPU using geometry shaders.
+
+## Geometry Shaders
+
+The geometry shaders are used to create primitives like points, lines and triangles. It is executed after vertex shader. It will convert the data coming from vertex shader into some other primitives. It also may emit no primitive as a result of a different algorithm. 
+
+In our case we need a basic surface consists triangles. To do that we can use some feature called instanced rendering. In our OpenGL program on CPU, we don't want to make any calculations. However, we still need to make enough draw calls to populate them into a surface. In the end we want to use geometry shaders to do the work. Thus, we can send points from CPU to GPU for converting them into triangles (triangle strips in our case). However, the surface we wanted to create has lots of polygons to draw, so calling a draw function for each one of them is not efficient. 
+
+The solution is making a single point draw call with an instance count. This call will create multiple copies of our point and will send them to our shaders. To differentiate and place them in their position, we need a way to know which point we are handling. The shader has a built in variable for instanced draw calls just for that. With our basic algorithm in the geometry shader we can easily turn our multiple copies of same point into a surface with triangular faces.
+
+
 
 ## Perlin Noise
+
+
 
 ## A Problem with Pseudo-Randomness
 
