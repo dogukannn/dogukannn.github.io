@@ -129,13 +129,13 @@ When I see this shape, first I noticed that the diagonals. After some thinking, 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/4/from_up.png">
-  <div class="figcaption"><br><br>
+  <div class="figcaption"><br>A resulting surface which colorized according to the y values of the positions.<br>
   </div>
 </div>
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/4/wireframe_from_up.png">
-  <div class="figcaption"><br><br>
+  <div class="figcaption"><br>Wireframe version of the same surface.<br>
   </div>
 </div>
 ## Different Frequencies of Same Noise
