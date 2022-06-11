@@ -17,7 +17,16 @@ In this project we will see how can we render procedural terrains using OpenGL w
 
 ## Terrain Rendering
 
+Terrain rendering without many repetitions is a big help while modelling and rendering large and open environments. The main examples for this kind of task is games. While rendering these terrains we need a way to achieve the wanted effect without a performance penalty. 
+
+To outcome these performance challenges, we can use things like culling or chunk rendering, but the most basic performance improvement will come from making these calculations parallel on a GPU. 
+
+Besides from the performance issues, we still need a way to create these good looking non-repeating surfaces. In the next section we will dive into noise to create these effects on our programs.
+
 ## Noise
+
+
+
 
 ## Perlin Noise
 
