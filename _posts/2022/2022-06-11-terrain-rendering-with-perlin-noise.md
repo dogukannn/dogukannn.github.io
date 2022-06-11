@@ -57,8 +57,28 @@ The solution is making a single point draw call with an instance count. This cal
   </div>
 </div>
 
+We created our surface without any fun, so lets have a look into perlin noise to what can we do about it.
+
 ## Perlin Noise
 
+Perlin Noise is a procedural pseudo-random texture generation algorithm to improve the realism into computer graphic programs. The algorithm takes inputs in 2D or 3D to generate a random floating point number in the range of (-1, 1). 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/perlin.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
+
+
+
+Perlin noise is a procedural texture primitive, a type of gradient noise used by visual effects artists to increase the appearance of realism in computer graphics. The function has a pseudo-random appearance, yet all of its visual details are the same size. This property allows it to be readily controllable; multiple scaled copies of Perlin noise can be inserted into mathematical expressions to create a great variety of procedural textures. Synthetic textures using Perlin noise are often used in CGI to make computer-generated visual elements – such as object surfaces, fire, smoke, or clouds – appear more natural, by imitating the controlled random appearance of textures in nature.
+
+
+An organic surface generated with Perlin noise
+It is also frequently used to generate textures when memory is extremely limited, such as in demos. Its successors, such as fractal noise and simplex noise, have become nearly ubiquitous in graphics processing units both for real-time graphics and for non-real-time procedural textures in all kinds of computer graphics.
+
+It is frequently used in video games to make procedurally generated terrain that looks natural.
 
 
 ## A Problem with Pseudo-Randomness
