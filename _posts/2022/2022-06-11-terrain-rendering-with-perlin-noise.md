@@ -35,6 +35,13 @@ Noise mostly refers to many types of random and troublesome siganls or noises. I
 
 We need some kind of randomness while creating realistic things, because the nature is fully-random. From the scattering of leaves to the movements of the insects. 
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/3/random.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
+
 
 ## Perlin Noise
 
