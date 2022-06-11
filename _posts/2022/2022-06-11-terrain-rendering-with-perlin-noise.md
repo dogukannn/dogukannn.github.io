@@ -91,6 +91,16 @@ In the next section we will apply these randomness in our surface as height valu
 
 ## A Problem with Pseudo-Randomness
 
+While creating our beatiful surface, I just tossed the perlin noise function into the height values of the triangles that we created on our geometry shader. 
+
+However, while creating our noise function I missed a crucial step. While selecting g
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/grad_weight.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
+
 ## Different Frequencies of Same Noise
 
 ## Example Camera Movement
