@@ -87,6 +87,7 @@ In the end we will have a texture like this if we want to map the color of the p
   </div>
 </div>
 
+In the next section we will apply these randomness in our surface as height values.
 
 ## A Problem with Pseudo-Randomness
 
