@@ -115,7 +115,7 @@ However, in my implementation I got a result which can called repetitive.
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/4/grads_repeating.png">
-  <div class="figcaption"><br><br>
+  <div class="figcaption"><br>Output from my code which I colorized each square as the gradient vector of the left bottom vertex of the each square of the grid.<br>
   </div>
 </div>
 
