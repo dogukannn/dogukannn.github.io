@@ -119,7 +119,13 @@ However, in my implementation I got a result which can called repetitive.
   </div>
 </div>
 
+When I see this shape, first I noticed that the diagonals. After some thinking, I noticed that the summation of the 2D coordinates of these squares are equal. Then, I looked at my index function to realize that with a non-shuffled index array I am only calculating the modulo of the total coordinate values because there is a one to one correspondence with the index of the array and the value inside of it. I shuffled the array and I got much better results.
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/shuffled.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
 
 ## Different Frequencies of Same Noise
 
