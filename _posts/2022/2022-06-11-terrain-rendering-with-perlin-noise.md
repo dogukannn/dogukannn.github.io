@@ -133,6 +133,11 @@ When I see this shape, first I noticed that the diagonals. After some thinking, 
   </div>
 </div>
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/4/wireframe_from_up.png">
+  <div class="figcaption"><br><br>
+  </div>
+</div>
 ## Different Frequencies of Same Noise
 
 ## Example Camera Movement
