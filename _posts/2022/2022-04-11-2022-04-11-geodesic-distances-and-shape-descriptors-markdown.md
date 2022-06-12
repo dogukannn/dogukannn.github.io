@@ -6,6 +6,7 @@ excerpt: Here we will examine 3D meshes with geodesic distances and shape descri
 date: '2022-04-11 13:00'
 image: /post_assets/1/post_image.png
 comments: true
+share-img: /post_assets/1/post_image.png
 ---
 
 The geodesic distance is the distance between 2 points along the surface of the object.  In this project we will examine the ways to find them and see the ways to use these distances. Finally, we will deep dive on shape descriptor algorithms like iso-curve signature and bilateral maps.
