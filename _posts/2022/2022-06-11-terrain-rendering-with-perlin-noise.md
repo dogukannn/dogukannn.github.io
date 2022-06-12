@@ -6,6 +6,7 @@ date: '2022-06-10 12:00'
 image: /post_assets/4/post_image.png
 excerpt: Here we will glance into procedural terrain generation.
 comments: true
+share-image: /post_assets/4/post_image.png
 ---
 In this project we will see how can we render procedural terrains using OpenGL with Perlin Noise. To optimize these calculations we will use geometry shaders to generate terrain on our GPU.
 
@@ -206,4 +207,4 @@ After implementing the camera I implement some parameters to change the number o
   </div>
 </div>
 
-While implementing this project, I noticed that creating random stuff on our computers is actually impossible due to their nature. However, for the visual applications the randomness we get from these different kind of algorithms is enough. In my future projects, I want to try these different algorithms on some other applications like smoke or cloud rendering. 
+While implementing this project, I noticed that creating random stuff on our computers is actually impossible due to their nature. However, for the visual applications the randomness we get from these different kind of algorithms is enough. In my future projects, I want to try these different algorithms on some other applications like smoke or cloud rendering.
