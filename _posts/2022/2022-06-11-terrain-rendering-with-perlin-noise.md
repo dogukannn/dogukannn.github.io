@@ -6,7 +6,7 @@ date: '2022-06-10 12:00'
 image: /post_assets/4/post_image.png
 excerpt: Here we will glance into procedural terrain generation.
 comments: true
-share-img: https://dogukannn.github.io/post_assets/4/post_image.png
+share-img: https://dogukannn.github.io/img/p4_share.jpg
 ---
 In this project we will see how can we render procedural terrains using OpenGL with Perlin Noise. To optimize these calculations we will use geometry shaders to generate terrain on our GPU.
 
