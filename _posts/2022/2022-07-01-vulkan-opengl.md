@@ -206,7 +206,7 @@ Your browser does not support the video tag.
 </video>
 Here is the end result of the dynamic cubemap application in Vulkan.
 
-### Comparison and Benchmarking
+## Comparison and Benchmarking
 
 In this section we compared these programs with respect to the performace.
 
@@ -281,7 +281,7 @@ Your browser does not support the video tag.
 Above is the OpenGL Implementation.
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/5/teapot_test.png">
+  <img src="/post_assets/5/hover_test.png">
   <div class="figcaption"><br>With the increased number of polygons we can see that Vulkan is performing better than OpenGL.<br>
   </div>
 </div>
