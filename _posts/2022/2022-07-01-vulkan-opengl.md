@@ -12,21 +12,21 @@ In this project, as a team of two people, we decided to reimplement the dynamic 
 
 
 
-## What is OpenGL?
+# What is OpenGL?
 
 OpenGL is a cross-platform rendering API (started development in 1991, released in 1992) for vector graphics, maintained by Khronos Group. Being cross-platform makes it advantageous over its alternatives such as D3D (Direct3D) which was designed by Microsoft specifically for Windows. It's an older API.
 
-## What is Vulkan?
+# What is Vulkan?
 
 Vulkan is also a cross-platform rendering API for vector graphics, maintained by Khronos Group. OpenGL's performance and efficiency was rivaling API's such as Microsoft's D3D 11. With the arrival of D3D 12, and Apple's Metal APIs, the demands of graphics industry exceeded what OpenGL had to offer. Therefore, Vulkan was announced in 2015 and released in 2018, being a low-head API stepping into the competition. OpenGL uses a single state-machine, which means that every host instruction is sequential, making it less feasible to run on multiple threads. However, Vulkan uses objects instead, allowing for multi-thread support. It also has multi-GPU support. OpenGL also it as long as both devices are the same model (SLI for NVIDIA and Crossfire for AMD). Vulkan allows for devices with different models. Being cross-platform also makes it advantageous over its alternatives such as D3D and Metal.
 
-## Preliminary
+# Preliminary
 
-# Environment Mapping
+## Environment Mapping
 
 Environment mapping is a type of texture mapping that incorporates sampling a texel from an external texture and approximating it on an object surface. The object may have reflective or refractive properties depending on the image texture. There are a variety ways of doing this, such as sphere mapping and cube mapping. We will use the cube mapping.
 
-# Cube mapping
+## Cube mapping
 
 Cube mapping is a type of environment mapping that uses essentially a cube of 6 planes (called a cube map), each having a texture. A normalized direction vector is calculated from the origin of a cube object and the with the aid of this vector, the properties of the fragment intersecting the vector is sampled from the image texture. A picture illustrating this concept is below
 
@@ -38,11 +38,11 @@ Cube mapping is a type of environment mapping that uses essentially a cube of 6 
 
 Cube maps has basically two types. When textures are provided from an image texture, it is called static cube mapping. However, static cube maps are not much useful in real-time applications. The other type is called dynamic cubemaps, which is used to render a scene into the sides of a cube. It can be used to create reflections as we will implement in this project.
 
-## Contents of the Project
+# Contents of the Project
 
 In this project we will create a fixed skybox object with static cubemaps and create a mirror object which uses a dynamic cubemap to reflect the scene. In the scene there will be one floating object with different polygon counts to compare the results between Vulkan and OpenGL. To debug the scenes, user can fly around the scene using the keyboard and mouse.
 
-## Explanation of the Shaders
+# Explanation of the Shaders
 
 Vertex shader for skybox is below.
 
@@ -140,7 +140,7 @@ Fragment shader for the mirror is below.
 We are computing the eye (I) and direction (R) vectors. We are similarly sampling with the direction vector. Notice the similarity to the skybox's fragment shader. The difference is that we may also use this shader with dynamic cube maps.
 
 
-## OpenGL Implementation
+# OpenGL Implementation
 
 First we need to create a framebuffer, they are usefull for rendering off-screen just like in our case. Then, we set our camera's position into the objects position whose surface is reflective. After that it is simple, we render 6 times with 90 degrees viewing angle in each direction for our cube's faces and move these into our cubemap texture. While doing this we need to make sure that our reflective object is not in the scene to get the result without the inside of our object. 
 
@@ -166,7 +166,7 @@ All there is left to do is sampling from the cubemap texture in our fragment sha
 
 Creating these framebuffers and rendering them into a texture is a breeze. The reason behind that is in OpenGL most of the things are set to default if you don't change them. This helps to creating basic applications like this in a faster way.
 
-## Vulkan Implementation
+# Vulkan Implementation
 
 In the core of the things, we did the same in the Vulkan. We created a framebuffer, we set it to offscreen, we created a cubemap texture to copy the offscreen renders. Also, the shaders are same as the OpenGL. We write the shaders in GLSL and compiled them into SPIR-V. 
 
@@ -206,11 +206,11 @@ Your browser does not support the video tag.
 </video>
 Here is the end result of the dynamic cubemap application in Vulkan.
 
-## Comparison and Benchmarking
+# Comparison and Benchmarking
 
 In this section we compared these programs with respect to the performace.
 
-# Metrics Used
+## Metrics Used
 
 We compared the average frame time in ms in order to see the performance of the programs. We didn't use the FPS because we thought that using the frame creation time is a more intuitive metric. The lower times will be better with respect to the performance because it creates the frames faster.
 
@@ -218,7 +218,7 @@ We found three models with different triangle counts, a cube with 24 triangles, 
 
 ## Results 
 
-# Cube Model
+### Cube Model
 
 Here is the videos of the two programs with cube model (24 Triangles).
 <video width="640" height="640" controls>
@@ -241,7 +241,7 @@ Above is the OpenGL Implementation.
 
 The reason behind this is may be our code in the Vulkan. For example, if we were able to prerecord the draw commands, I believe that the Vulkan's speed will be much faster.
 
-# Teapot Model
+### Teapot Model
 
 Here is the videos of the two programs with teapot model (2.3k Triangles).
 <video width="640" height="640" controls>
@@ -265,7 +265,7 @@ Above is the OpenGL Implementation.
 With these two tests, we can see that spikes and other fluactiations doesn't occur in Vulkan. This is also an important thing, becuase in graphics applications little changes in the FPS will be appearent. 
 
 
-# Hover Model
+### Hover Model
 
 Here is the videos of the two programs with hover model (480k Triangles).
 <video width="640" height="640" controls>
@@ -295,13 +295,13 @@ The reason behind this is may be the Vulkan has some fixed time to get the neces
 </div>
 
 
-## Conclusion
+# Conclusion
 
 We saw that creating basic graphic applications in Vulkan is very different than OpenGL in the details. In the both API the core of the things are the same, however internal details is much more appearent in the Vulkan. In the Vulkan, you can feel that you are very close to the GPU. This means if you know what are you doing, you can write optimized codes for spesific purposes. In our scenario, after learning OpenGL, Vulkan made us learn the finer details in the pipeline of a graphics application. 
 
 In the end, we saw that even with our un-optimized code, Vulkan is faster that OpenGL in high polygon counts. However, with low polygon count OpenGL's speed can help when creating a prototype with the addition of the rather more understandable codes. 
 
-## References
+# References
 
 Hongtongsak, K. (2020, July 6). Dynamic-Cubemaps. Retrieved July 1, 2022, from https://khongton.github.io/Dynamic-Cubemaps/
 
