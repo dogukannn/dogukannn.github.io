@@ -1,10 +1,10 @@
 ---
 layout: post
 published: true
-title: Terrain Rendering with Perlin Noise
-date: '2022-06-10 12:00'
-image: /post_assets/4/post_image.png
-excerpt: Here we will glance into procedural terrain generation.
+title: Comparing OpenGL and Vulkan with Dynamic Cubemaps
+date: '2022-07-01 12:00'
+image: /post_assets/5/post_image.png
+excerpt: Here we will compare OpenGL and Vulkan with a scene with dynamic cubemaps.
 comments: true
 ---
 
@@ -31,7 +31,7 @@ Environment mapping is a type of texture mapping that incorporates sampling a te
 Cube mapping is a type of environment mapping that uses essentially a cube of 6 planes (called a cube map), each having a texture. A normalized direction vector is calculated from the origin of a cube object and the with the aid of this vector, the properties of the fragment intersecting the vector is sampled from the image texture. A picture illustrating this concept is below
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/3/cubemap.png">
+  <img src="/post_assets/5/cubemap.png">
   <div class="figcaption"><br><br>
   </div>
 </div>
@@ -206,7 +206,7 @@ Your browser does not support the video tag.
 </video>
 Here is the end result of the dynamic cubemap application in Vulkan.
 
-## Comparison and Benchmarking
+### Comparison and Benchmarking
 
 In this section we compared these programs with respect to the performace.
 
@@ -216,16 +216,97 @@ We compared the average frame time in ms in order to see the performance of the 
 
 We found three models with different triangle counts, a cube with 24 triangles, a teapot with 2.3k triangles, and a hover with 480k triangles.
 
-# Results 
+## Results 
 
-Here is the videos of the two programs with cube model.
+# Cube Model
+
+Here is the videos of the two programs with cube model (24 Triangles).
 <video width="640" height="640" controls>
   <source src="/post_assets/5/vulkan_cube.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
+Above is the Vulkan Implementation.
+
 <video width="640" height="640" controls>
   <source src="/post_assets/5/opengl_cube.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
+Above is the OpenGL Implementation.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/5/cube_test.png">
+  <div class="figcaption"><br>The results show that, in the scene with the cube models, OpenGL is faster.<br>
+  </div>
+</div>
+
+The reason behind this is may be our code in the Vulkan. For example, if we were able to prerecord the draw commands, I believe that the Vulkan's speed will be much faster.
+
+# Teapot Model
+
+Here is the videos of the two programs with teapot model (2.3k Triangles).
+<video width="640" height="640" controls>
+  <source src="/post_assets/5/vulkan_teapot.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+Above is the Vulkan Implementation.
+
+<video width="640" height="640" controls>
+  <source src="/post_assets/5/opengl_teapot.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+Above is the OpenGL Implementation.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/5/teapot_test.png">
+  <div class="figcaption"><br>The results show that, in the scene with the teapot models, OpenGL is still faster. However, the difference is slowly decreasing<br>
+  </div>
+</div>
+
+With these two tests, we can see that spikes and other fluactiations doesn't occur in Vulkan. This is also an important thing, becuase in graphics applications little changes in the FPS will be appearent. 
 
 
+# Hover Model
+
+Here is the videos of the two programs with hover model (480k Triangles).
+<video width="640" height="640" controls>
+  <source src="/post_assets/5/vulkan_hover.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+Above is the Vulkan Implementation.
+
+<video width="640" height="640" controls>
+  <source src="/post_assets/5/opengl_hover.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+Above is the OpenGL Implementation.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/5/teapot_test.png">
+  <div class="figcaption"><br>With the increased number of polygons we can see that Vulkan is performing better than OpenGL.<br>
+  </div>
+</div>
+
+The reason behind this is may be the Vulkan has some fixed time to get the necessary information and create objects but it is efficient when drawing higher number of polygons. 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/5/table.png">
+  <div class="figcaption"><br>All the data we collected from these 3 different scenes.<br>
+  </div>
+</div>
+
+
+## Conclusion
+
+We saw that creating basic graphic applications in Vulkan is very different than OpenGL in the details. In the both API the core of the things are the same, however internal details is much more appearent in the Vulkan. In the Vulkan, you can feel that you are very close to the GPU. This means if you know what are you doing, you can write optimized codes for spesific purposes. In our scenario, after learning OpenGL, Vulkan made us learn the finer details in the pipeline of a graphics application. 
+
+In the end, we saw that even with our un-optimized code, Vulkan is faster that OpenGL in high polygon counts. However, with low polygon count OpenGL's speed can help when creating a prototype with the addition of the rather more understandable codes. 
+
+## References
+
+Hongtongsak, K. (2020, July 6). Dynamic-Cubemaps. Retrieved July 1, 2022, from https://khongton.github.io/Dynamic-Cubemaps/
+
+Wikimedia Foundation. (2022, March 12). Reflection mapping. Wikipedia. Retrieved July 1, 2022, from https://en.wikipedia.org/wiki/Reflection_mapping#Cube_mapping
+
+Wikimedia Foundation. (2022, June 8). OpenGL. Wikipedia. Retrieved July 1, 2022, from https://en.wikipedia.org/wiki/OpenGL
+
+Wikimedia Foundation. (2022, June 26). Vulkan. Wikipedia. Retrieved July 1, 2022, from https://en.wikipedia.org/wiki/Vulkan
