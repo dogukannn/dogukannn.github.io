@@ -303,6 +303,8 @@ In the end, we saw that even with our un-optimized code, Vulkan is faster that O
 
 # References
 
+Overvoorde, A. (n.d.). Introduction. Introduction - Vulkan Tutorial. Retrieved July 7, 2022, from https://vulkan-tutorial.com/ 
+
 Hongtongsak, K. (2020, July 6). Dynamic-Cubemaps. Retrieved July 1, 2022, from https://khongton.github.io/Dynamic-Cubemaps/
 
 Wikimedia Foundation. (2022, March 12). Reflection mapping. Wikipedia. Retrieved July 1, 2022, from https://en.wikipedia.org/wiki/Reflection_mapping#Cube_mapping
