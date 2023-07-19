@@ -4,4 +4,4 @@ title: about me
 subtitle:
 ---
 
-Senior year Computer Science/Engineering student in Middle East Technical University, Turkey. Interested in games and graphics in the virtual world.
+A Graphics Software Engineer, focused on virtual production, with a primary specialization in cutting-edge rendering technologies and optimization.
