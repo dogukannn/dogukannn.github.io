@@ -10,7 +10,11 @@ comments: true
 
 In this project, as a team of two people, we decided to reimplement the dynamic cubemap application using Vulkan. The previous implementation was using OpenGL. In this text, we are (1) reimplementing the dynamic cubemap application, then (2) comparing between the two implementations, in terms of metrics such as FPS.
 
-
+# Where was I?
+# Using DirectX12
+# Volumetric Rendering
+# Ray Marching (Example Shader)
+# Ray marching in a Forward Pipeline
 
 # What is OpenGL?
 
