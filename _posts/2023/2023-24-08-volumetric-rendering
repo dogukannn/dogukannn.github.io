@@ -16,9 +16,10 @@ We treat rendering volumes different than we handle our classic triangle meshes,
 
 ## //////// import cloud image where rays bounce from particles
 
-In order to render these volumes, we can use several methods. First, we can simulate each ray from light and scatter them inside the volume, and when we have lots of samples and bounces (path tracing), we will have a realistic looking cloud. However, besides from the beautiful outputs, this method is hard to achieve in real time. For a start we can drop the lights at all, we can just simulate how much of the background we can see from the particular view area, in the smallest case from a particular pixel. We just need to calculate how dense the the particles from our eye to the objects in the scene. We can use the ray marching technique for it.
+In order to render these volumes, we can use several methods. First, we can simulate each ray from light and scatter them inside the volume, and when we have lots of samples and bounces (path tracing), we will have a realistic looking volume. However, besides from the beautiful outputs, this method is hard to achieve in real time. For a start we can drop the lights at all, we can just simulate how much of the background we can see from the particular view area, in the smallest case from a particular pixel. We just need to calculate how dense the the particles from our eye to the objects in the scene. We can use the ray marching technique for it.
 
-# Ray Marching (Example Shader)
+# Ray Marching
+
 
 # Using DirectX12
 # HLSL Shader Reflection
