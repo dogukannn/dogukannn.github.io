@@ -94,7 +94,7 @@ url-pretty: "dogukannn.github.io"  # eg. "deanattali.com/beautiful-jekyll"
 disqus: "dogukan"
 
 # Fill in your Google Analytics ID to track your website using GA
-google_analytics: "-"
+google_analytics: "G-NW11YDZJZ2"
 
 # Google Tag Manager ID
 #gtm: ""
