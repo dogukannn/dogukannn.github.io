@@ -680,6 +680,7 @@ table tr td :last-child {
 
 pre {
   font-size: 16px;
+  color:#FFFFFF;
   line-height: 1.5em;
 }
 pre code {
@@ -687,7 +688,7 @@ pre code {
 }
 pre.highlight, .highlight > pre, td.code pre {
   background: #121212;
-  background-image: linear-gradient(#121212 50%, #2c2c2c 50%);
+  background-image: linear-gradient(#121212 50%, #141414 50%);
   background-repeat: repeat;
   background-size: 3em 3em;
   background-position: 0px 10px;
