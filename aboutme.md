@@ -4,4 +4,4 @@ title: about me
 subtitle:
 ---
 
-Graphics Software Engineer, focused on virtual production, with a primary specialization in cutting-edge rendering technologies and optimization.
+I'm Doğukan Öztürk, a Graphics Software Engineer, focused on virtual production, with a primary specialization in cutting-edge rendering technologies and optimization.
