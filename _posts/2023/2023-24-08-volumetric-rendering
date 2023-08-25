@@ -8,13 +8,25 @@ excerpt: Here we will create a scene with volumetric fog using ray marching.
 comments: true
 ---
 
-In this project, as a team of two people, we decided to reimplement the dynamic cubemap application using Vulkan. The previous implementation was using OpenGL. In this text, we are (1) reimplementing the dynamic cubemap application, then (2) comparing between the two implementations, in terms of metrics such as FPS.
+While I was chatting with a friend in a rainy day by a pool, we try to think a way to simulate the drops and the waves on the surface. Then we get into the source of rain, the clouds. Then the topic came to the way Horizon Zero Dawn rendered it's clouds. We had a understanding, but we need the practical experience to create it from scratch. Then we, three colleagues, found ourselves in a competition for creating the best cloud in a virtual scene. After a long break from writing blog posts, I decided that write about my first steps into the volumetric rendering.
 
-# Where was I?
-# Using DirectX12
 # Volumetric Rendering
+
+We treat rendering volumes different than we handle our classic triangle meshes, but why? In the case of rendering triangles we just render the surfaces of the three dimensional shapes which are hollow. We model the objects in that way from the real world, because it's easier to work with and we can't see the inside of them anyways. However, this idea of treating everything as a surface kind of fails in the volumes like smoke, cloud or fires. In the essence, volumes like these are just a group of particles hanging out together. The light bounces from the particles and where the particles are high in density, less light comes from behind of them.
+
+## //////// import cloud image where rays bounce from particles
+
+In order to render these volumes, we can use several methods. First, we can simulate each ray from light and scatter them inside the volume, and when we have lots of samples and bounces (path tracing), we will have a realistic looking cloud. However, besides from the beautiful outputs, this method is hard to achieve in real time. For a start we can drop the lights at all, we can just simulate how much of the background we can see from the particular view area, in the smallest case from a particular pixel. We just need to calculate how dense the the particles from our eye to the objects in the scene. We can use the ray marching technique for it.
+
 # Ray Marching (Example Shader)
-# Ray marching in a Forward Pipeline
+
+# Using DirectX12
+# HLSL Shader Reflection
+# Ray marching in a Forward Pipeline (Depth Passes)
+# Result and Future Work
+
+
+
 
 # What is OpenGL?
 
