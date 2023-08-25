@@ -38,7 +38,7 @@ navbar-links:
 
 # If you want to have an image logo in the top-left corner instead of the title text,
 # then specify the following parameter
-title-img: /img/header-bg.jpg
+# title-img: /img/header-bg.jpg
 
 # --- Background colour/image options --- #
 
@@ -46,7 +46,7 @@ title-img: /img/header-bg.jpg
 # has a white background. You can specify a different background colour or a background image
 # for the navigation bar, the main page, and the footer.
 # navbar-col: "orange"
-# navbar-img: "/img/bgimage.png"
+navbar-img: /img/header-bg.jpg
 # footer-col: "blue"
 # footer-img: "/img/bgimage.png"
 # page-col: "#FF0000"
