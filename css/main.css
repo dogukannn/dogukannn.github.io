@@ -130,7 +130,7 @@ img {
 .navbar-custom .navbar-brand,
 .navbar-custom .nav li a {
   font-weight: 800;
-  color: #404040;
+  color: #FFFFFF;
 }
 
 .navbar-custom .navbar-brand:hover,
@@ -323,7 +323,7 @@ footer .theme-by {
 
 .post-preview {
   padding: 20px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #bb86fc;
 }
 
 @media only screen and (min-width: 768px) {
@@ -338,7 +338,7 @@ footer .theme-by {
 
 .post-preview a {
   text-decoration: none;
-  color: #404040;
+  color: #FFFFFF;
 }
 
 .post-preview a:focus,
@@ -378,7 +378,7 @@ footer .theme-by {
   height: 192px;
   width: 192px;
   margin-top: -35px;
-  filter: grayscale(90%);
+  filter: grayscale(10%);
 }
 .post-image:hover {
   filter: grayscale(0%);
