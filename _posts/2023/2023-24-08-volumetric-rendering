@@ -10,23 +10,56 @@ comments: true
 
 While I was chatting with a friend in a rainy day by a pool, we try to think a way to simulate the drops and the waves on the surface. Then we get into the source of rain, the clouds. Then the topic came to the way Horizon Zero Dawn rendered it's clouds. We had a understanding, but we need the practical experience to create it from scratch. Then we, three colleagues, found ourselves in a competition for creating the best cloud in a virtual scene. After a long break from writing blog posts, I decided that write about my first steps into the volumetric rendering.
 
+# Using DirectX12 HLSL Shader Reflection
+
+Before moving to volumetric rendering, I want to say somethings about the graphics API. I used DirectX12 to implement this project. Normally, I use Vulkan in my job, however I had a chance to experiment with some DirectX12 codes while working with Unreal Engine. I think it ended up a great project to learn the counterparts of the commands from the Vulkan. While implementing the project I want to experiment with shader reflection to ease the root signature creation process, and came across a [good introductry article it by Tarun Ramaswamy](https://rtarun9.github.io/blogs/shader_reflection/) which I recommend if you want to get into how to reflect HLSL code using DXC (DirectX Shader Compiler). You can check out [my implementation of the volumetric rendering and shader reflection code from GitHub](https://github.com/dogukannn/volumetric-rendering).
+
 # Volumetric Rendering
 
 We treat rendering volumes different than we handle our classic triangle meshes, but why? In the case of rendering triangles we just render the surfaces of the three dimensional shapes which are hollow. We model the objects in that way from the real world, because it's easier to work with and we can't see the inside of them anyways. However, this idea of treating everything as a surface kind of fails in the volumes like smoke, cloud or fires. In the essence, volumes like these are just a group of particles hanging out together. The light bounces from the particles and where the particles are high in density, less light comes from behind of them.
 
 ## //////// import cloud image where rays bounce from particles
 
-In order to render these volumes, we can use several methods. First, we can simulate each ray from light and scatter them inside the volume, and when we have lots of samples and bounces (path tracing), we will have a realistic looking volume. However, besides from the beautiful outputs, this method is hard to achieve in real time. For a start we can drop the lights at all, we can just simulate how much of the background we can see from the particular view area, in the smallest case from a particular pixel. We just need to calculate how dense the the particles from our eye to the objects in the scene. We can use the ray marching technique for it.
+In order to render these volumes, we can use several methods. First, we can simulate each ray from light and scatter them inside the volume, and when we have lots of samples and bounces (path tracing), we will have a realistic looking volume. However, besides from the beautiful outputs, this method is hard to achieve in real time. For a start we can drop the lights at all, we can just simulate how much of the background we can see from the particular view area, in the smallest case from a particular pixel. We just need to calculate how dense the the particles from our eye to the objects in the scene. We can use the ray marching for it.
 
 # Ray Marching
 
+Ray marching can be summarised as starting from the camera and moving towards a direction in small steps accumulating the light which will get smaller as it moves far away. In case of volumes, we need a way to check how much light passes from a particular point in the volume. We can store this data in the memory with custom data structures designed for it (i.e. [OpenVDB](https://www.openvdb.org), [NanoVDB](https://www.nvidia.com/en-us/on-demand/session/gtcspring21-s31836/)). In this case we will randomize the density for a point in a cloud trying to get a realistic lookin one. 
 
-# Using DirectX12
-# HLSL Shader Reflection
+## //////// import cloud image of raymarching
+
+# Randomness and Fractal Brownian Motion
+
+We need a function that will generate a random floating point number for each 3D point. We can use a trilinear interpolation method on a basic hash function in order to have some kind of continuity in 3D. However this won't be good enough, or will look realistic enough for a cloud. This is where Fractal Brownian Motion kicks in, in the most basic sense it smoothes the randomness with self-similarity. You can check [Inigo Quilez's great article about the topic](https://iquilezles.org/articles/fbm/) if you want to deep dive. 
+
+## //////// import random image with fbm
+
+The rest is simple, we just accumulate the random values toward our direction and accumulate them with alpha values in mind.
+
+## //////// import random image with simple clouds
+
 # Ray marching in a Forward Pipeline (Depth Passes)
+
+While I was watching Cem Yuksel's lecture on Volume Rendering, the idea of implementing this method with a pixel shader is discussed. Which suggests that we can find where we can place the volume (where the ray enters and exits) from the depth value of the scene. After hearing it, I constructed a plan in my head. I will add two parallel passes after rendering the scene, one with the front faces culled of the mesh which we will place the volume, and one with the back faces culled. However, for the enter and exit depths we need to have the depth values of the scene beforehand because we may end the volume or not start the volume. This happens when some mesh is inside the volume or the mesh is closer to the camera than the volume in that particular pixel.
+
+## //////// import depth buffer images
+
+After these passes, we need to render the volume in our final pass which we can think of like a full screen post-process pass. For each pixel, if there is a volume starting in the direction, we will start sampling denstity values with small steps until we exit the volume. We blend the resulting density with respect to alpha to get our final results. In my example, I created a foggy graveyard hoping it may get scary.
+
+## //////// import final images
+
 # Result and Future Work
 
 
+
+
+# References
+
+https://blog.42yeah.is/rendering/2023/02/11/clouds.html
+
+https://iquilezles.org/articles/fbm/
+
+https://www.youtube.com/watch?v=y4KdxaMC69w Cem yuksel, Interactive Computer Graphics Course Videos
 
 
 # What is OpenGL?
