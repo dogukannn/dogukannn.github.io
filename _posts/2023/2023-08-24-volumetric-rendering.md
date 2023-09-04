@@ -41,7 +41,7 @@ Ray marching can be summarised as starting from the camera and moving towards a 
 We need a function that will generate a random floating point number for each 3D point. We can use a trilinear interpolation method on a basic hash function to have some kind of continuity in 3D. However, this won't be good enough or will look realistic enough for a cloud. This is where Fractal Brownian Motion kicks in, in the most basic sense it smoothes the randomness with self-similarity. You can check [Inigo Quilez's great article about the topic](https://iquilezles.org/articles/fbm/) if you want to deep dive. 
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/6/fbm2.png">
+  <img src="/post_assets/6/fbm2.gif">
   <div class="figcaption"><br><br>
   </div>
 </div>
