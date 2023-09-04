@@ -3,7 +3,7 @@ layout: post
 published: true
 title: Volumetric Rendering with DirectX12
 date: '2023-08-24 12:00'
-image: /post_assets/6/post_image.png
+image: /post_assets/6/post_image.jpg
 excerpt: Here we will create a scene with volumetric fog using ray marching.
 comments: true
 ---
