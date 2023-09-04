@@ -6,6 +6,7 @@ date: '2023-08-24 12:00'
 image: /post_assets/6/post_image.png
 excerpt: Here we will create a scene with volumetric fog using ray marching.
 comments: true
+share-img: /post_assets/6/post_image.png
 ---
 
 While I was chatting with a friend on a rainy day by a pool, we tried to think of a way to simulate the drops and the waves on the surface. Then we get into the source of rain, the clouds. Then the topic came to the way Horizon Zero Dawn rendered its clouds. We had an understanding, but we needed the practical experience to create it from scratch. Then we, three colleagues, found ourselves in a competition for creating the best cloud in a virtual scene. After a long break from writing blog posts, I decided to write about my first steps into volumetric rendering.
