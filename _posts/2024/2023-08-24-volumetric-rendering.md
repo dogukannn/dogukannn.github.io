@@ -9,7 +9,7 @@ comments: true
 share-img: /post_assets/7/post_image.png
 ---
 
-When I started my journey with Computer Graphics, I came across a fun little book called "Ray Tracing in One Weekend". I was mesmerized by the output images that contain some good looking spheres. I followed that book and implemented a basic ray tracer with different materials and sampling. The book only covered scenes with spheres for simplicity. That journey led me to some interesting topics such as importance sampling, insides of real world cameras and properties of light. With the start of my Masters Degree, I jumped back on this journey with a broader vision and more importantly "triangles".
+When I started my journey with Computer Graphics, I found a fun little book called "Ray Tracing in One Weekend". I was mesmerized by the output images that contained some good-looking spheres. I followed that book and implemented a basic ray tracer with different materials and sampling. For simplicity, the book only covered scenes with spheres. That journey led me to some interesting topics such as importance sampling, the insides of real-world cameras, and properties of light. With the start of my master's Degree, I jumped back on this journey with a broader vision and more importantly "triangles".
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/7/ray_traced_spheres.png">
@@ -20,7 +20,7 @@ When I started my journey with Computer Graphics, I came across a fun little boo
 
 # Starting from the Basics
 
-In this version, we started with a simpler abstraction over ray tracing, every pixel is sampled once and every light source is checked for basic Blinn-Phong shading calculations. The basic material has diffuse, specular and ambient reflectance values for each color channel. I implemented the Möller–Trumbore intersection for triangle ray intersections, and used standart library features like future and async for multithreaded implementation.
+In this version, we started with a simpler abstraction over ray tracing. Every pixel is sampled once, and every light source is checked for basic Blinn-Phong shading calculations. The basic material has diffuse, specular, and ambient reflectance values for each color channel. I implemented the Möller–Trumbore intersection for triangle ray intersections and used standard library features like future and async for multithreaded implementation.
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/7/bunny.png">
@@ -30,7 +30,7 @@ In this version, we started with a simpler abstraction over ray tracing, every p
 
 # Mirror Materials 
 
-For mirror materials, after the intersection, a reflected ray is traced for calculating the light coming from scene. In practice this could happen infinite times, so we need a limit for the traced ray reflected from the mirror materials.
+For mirror materials, after the intersection, a reflected ray is traced to calculate the light coming from the scene. In practice this could happen infinite times, so we need a limit for the traced ray reflected from the mirror materials.
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/7/spheres_mirror.png">
@@ -41,7 +41,7 @@ For mirror materials, after the intersection, a reflected ray is traced for calc
 # Dielectric and Conductor Materials
 
 For transparent objects, we need to trace a refracted ray from the intersection point in addition to the reflected ray. We can calculate the direction of the refracted ray according to Snell's Law. 
-After this calculation we need to trace two more rays, however to decide the energy distribution (i.e. which ray carries more light towards the camera) we can use Fresnel equations. This equations specify an object's reflections for lights polarization states. For refracted rays we also need to calculate attenuation to calculate the absorbtion of the energy inside of a transparent material, we will use Beer's Law for this calculation. With all things added, we can output nice looking transparent objects.
+After this calculation we need to trace two more rays, however, to decide the energy distribution (i.e. which ray carries more light toward the camera) we can use Fresnel equations. These equations specify an object's reflections for light polarization states. For refracted rays we also need to calculate attenuation to calculate the absorption of the energy inside of a transparent material, we will use Beer's Law for this calculation. With all things added, we can output nice-looking transparent objects.
 
 For conductors, we will omit the refracted ray and only use the Fresnel equations for the energy percentage of the reflected ray.
 
@@ -67,7 +67,7 @@ For conductors, we will omit the refracted ray and only use the Fresnel equation
 
 # Result and Future Work
 
-In the end, I have a basic ray tracer that can handle multiple kinds of materials and triangle intersections. However, without the acceleration structures the process is slow. In the future iterations a Bounding Volume Hierarchy or kD-tree implementation is needed.
+In the end, I have a basic ray tracer that can handle multiple kinds of materials and triangle intersections. However, without the acceleration structures, the process is slow. In future iterations, a Bounding Volume Hierarchy or kD-tree implementation is needed.
 
 # References
 
