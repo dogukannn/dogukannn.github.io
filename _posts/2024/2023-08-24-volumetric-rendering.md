@@ -67,7 +67,7 @@ For conductors, we will omit the refracted ray and only use the Fresnel equation
 
 # Result and Future Work
 
-In the end, I have a basic ray tracer that can handle multiple kinds of materials and triangle intersections. However, without the acceleration structures, the process is slow. In future iterations, a Bounding Volume Hierarchy or kD-tree implementation is needed.
+In the end, I have a basic ray tracer that can handle multiple kinds of materials and triangle intersections. However, without the acceleration structures, the process is slow. In future iterations, a Bounding Volume Hierarchy or k-d tree implementation is needed.
 
 # References
 
