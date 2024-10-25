@@ -65,6 +65,53 @@ For conductors, we will omit the refracted ray and only use the Fresnel equation
   </div>
 </div>
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/7/berserker_smooth_2551.png">
+  <div class="figcaption"><br>Rendered in 2551 ms<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/7/Car_front_smooth_9301.png">
+  <div class="figcaption"><br>Rendered in 9301 ms<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/7/Car_smooth_9279.png">
+  <div class="figcaption"><br>Rendered in 9279 ms<br>
+  </div>
+</div>
+
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/7/cornellbox_736.png">
+  <div class="figcaption"><br>Rendered in 736 ms<br>
+  </div>
+</div>
+
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/7/low_poly_scene_smooth_7290.png">
+  <div class="figcaption"><br>Rendered in 7290 ms<br>
+  </div>
+</div>
+
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/7/scienceTree_2373.png">
+  <div class="figcaption"><br>Rendered in 2373 ms<br>
+  </div>
+</div>
+
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/7/ton_Roosendaal_smooth_23939.png">
+  <div class="figcaption"><br>Rendered in 23939 ms<br>
+  </div>
+</div>
+
+
 # Result and Future Work
 
 In the end, I have a basic ray tracer that can handle multiple kinds of materials and triangle intersections. However, without the acceleration structures, the process is slow. In future iterations, a Bounding Volume Hierarchy or k-d tree implementation is needed.
