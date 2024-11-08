@@ -155,97 +155,33 @@ While implementing the transformations, I realized that the normals are not tran
 
 While testing the BVH structure, some scenes, didn't render as fast as I expected. While experimenting with some stuff on the code, I noticed that some leaf nodes didn't split any triangles, and have all the triangles in one child which can have like 240 triangles which is bad. To solve this issue I tried to split the triangles equally, for each axis, I tried different split points and calculated the cost of the split. I used a very basic cost function, which is the count difference between the nodes after we split them. Then I used the minimun cost split point for the split. This approach worked well, and the render times decreased for some meshes. However, for some meshes like the dragon model, the render time increased. I believe this is the result of my cost functions, it can work well for meshes with longer triangles, however bad for meshes with shorter and smaller triangles. I am not exactly sure this is the cause, it is just a guess and needs further investigation.
 
-
-
-
-
-# Mirror Materials 
-
-For mirror materials, after the intersection, a reflected ray is traced to calculate the light coming from the scene. In practice this could happen infinite times, so we need a limit for the traced ray reflected from the mirror materials.
+For the windmill scene, it worked well, and the render time decreased from 1080ms to 484ms.
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/7/spheres_mirror.png">
-  <div class="figcaption"><br>Sphere with mirror material, rendered in 589 ms<br>
+  <img src="/post_assets/8/windmill_smooth.png">
+  <div class="figcaption"><br>Windmill scene rendered with a better split in 484ms, 2x faster than the basic split method<br>
   </div>
 </div>
 
-# Dielectric and Conductor Materials
+# Too Many BVHs, Time For a BVH of BVHs Also Known As Top Level Acceleration Structures
 
-For transparent objects, we need to trace a refracted ray from the intersection point in addition to the reflected ray. We can calculate the direction of the refracted ray according to Snell's Law. 
-After this calculation we need to trace two more rays, however, to decide the energy distribution (i.e. which ray carries more light toward the camera) we can use Fresnel equations. These equations specify an object's reflections for light polarization states. For refracted rays we also need to calculate attenuation to calculate the absorption of the energy inside of a transparent material, we will use Beer's Law for this calculation. With all things added, we can output nice-looking transparent objects.
+In the previous windmill scene, there are 20 meshes to render, and each mesh has its own BVH structure. And our rays won't intersect with many of them, in this case we don't have many meshes, but we still can reduce the number of intersection checks. To do this, we can create a top-level BVH structure, which holds the BVH structures of the meshes. We can check the intersection with the top-level BVH first, then with the BVH structures of the meshes. However, there is a catch, we need to transform the bounding boxes of these BVH structures with respect to their model matrices and move them into the word space to correctly build the top level BVH structure. I used the same building method and split function to build the top-level BVH structure, the main difference is that leaf nodes hold the BVH structures of the meshes.
 
-For conductors, we will omit the refracted ray and only use the Fresnel equations for the energy percentage of the reflected ray.
+The results for the windmill scene were satisfying, the render time decreased from 484ms to 419ms. However, for the grass scene this approach increased the render time from 6679ms to 7226ms. I believe this is the result of the additional intersections with bounding boxes, which can be unnecessary for some scenes. I believe this approach can be useful for scenes with many meshes, and for scenes with a few meshes, it can be slower than the basic BVH structure.
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/7/cornellbox_recursive.png">
-  <div class="figcaption"><br>Conductor and dielectric spheres in the Cornell box, rendered in 751 ms<br>
+  <img src="/post_assets/8/windmill_smooth.png">
+  <div class="figcaption"><br>Windmill scene rendered with a TLAS BVH in 419ms<br>
   </div>
 </div>
 
-# More Scenes
+# Timings with Different Approaches
 
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/7/windmill_smooth.png">
-  <div class="figcaption"><br>Rendered in 7420 ms<br>
-  </div>
-</div>
+Scene | Basic BVH | Better Split BVH | TLAS BVH
+--- | --- | --- | ---
+Dragon | 730ms | 730ms | 730ms
+Windmill | 1080ms | 484ms | 419ms
 
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/7/scienceTree_glass.png">
-  <div class="figcaption"><br>Rendered in 4138 ms<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/7/berserker_smooth_2551.png">
-  <div class="figcaption"><br>Rendered in 2551 ms<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/7/Car_front_smooth_9301.png">
-  <div class="figcaption"><br>Rendered in 9301 ms<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/7/Car_smooth_9279.png">
-  <div class="figcaption"><br>Rendered in 9279 ms<br>
-  </div>
-</div>
-
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/7/cornellbox_736.png">
-  <div class="figcaption"><br>Rendered in 736 ms<br>
-  </div>
-</div>
-
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/7/low_poly_scene_smooth_7290.png">
-  <div class="figcaption"><br>Rendered in 7290 ms<br>
-  </div>
-</div>
-
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/7/scienceTree_2373.png">
-  <div class="figcaption"><br>Rendered in 2373 ms<br>
-  </div>
-</div>
-
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/7/ton_Roosendaal_smooth_23939.png">
-  <div class="figcaption"><br>Rendered in 23939 ms<br>
-  </div>
-</div>
-
-
-# Result and Future Work
-
-In the end, I have a basic ray tracer that can handle multiple kinds of materials and triangle intersections. However, without the acceleration structures, the process is slow. In future iterations, a Bounding Volume Hierarchy or k-d tree implementation is needed.
 
 # References
 
