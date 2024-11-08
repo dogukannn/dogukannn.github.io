@@ -179,9 +179,20 @@ The results for the windmill scene were satisfying, the render time decreased fr
 
 Scene | Half Split BVH Tiled MP | Experimental Split BVH Tiled MP | Half Split TLAS BVH Tiled MP | Experimental Split TLAS BVH Tiled MP | Experimental Split BVH Basic MP
 --- | --- | --- | --- | --- | ---
-Dragon | 60ms | 60ms | 60ms | 60ms | 730ms
-Windmill | 484ms | 484ms | 419ms | 419ms | 1080ms
-Grass | 6679ms | 6679ms | 7226ms | 7226ms | 6679ms
+Dragon             | 84ms      | 363ms   | 90ms    | 375ms    | 1051ms
+Glaring Davids     | 283ms     | 748ms   | 222ms   | 757ms    | 1324ms
+Lobster            | 837ms     | 2211ms  | 893ms   | 2274ms   | 3510ms
+Science Tree       | 145ms     | 157ms   | 157ms   | 173ms    | 1179ms
+Ton Roosendaal     | 73ms      | 68ms    | 84ms    | 76ms     | 312ms
+Dragon Metal       | 1225ms    | 8773ms  | 1315ms  | 7327ms   | 9803ms
+Ellipsoids         | 101ms     | 103ms   | 1086ms  | 112ms    | 744ms
+Marching Dragons   | 1227ms    | 3655ms  | 1230ms  | 3673ms   | 5699ms
+Metal Glass Plates | 632ms     | 747ms   | 639ms   | 688ms    | 1163ms
+Simple Transform   | 46ms      | 44ms    | 45ms    | 47ms     | 741ms
+Spheres            | 87ms      | 90ms    | 106ms   | 104ms    | 726ms
+Two Berserkers     | 364ms     | 357ms   | 210ms   | 130ms    | 993ms
+Windmill           | 1158ms    | 483ms   | 961ms   | 444ms    | 1034ms
+Grass Desert       | 6930ms    | 7886ms  | 7330ms  | 8512ms   | 10097ms
 
 
 
