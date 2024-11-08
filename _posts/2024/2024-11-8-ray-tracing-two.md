@@ -195,6 +195,110 @@ Windmill           | 1158ms    | 483ms   | 961ms   | 444ms    | 1034ms
 Grass Desert       | 6930ms    | 7886ms  | 7330ms  | 8512ms   | 10097ms
 
 
+# Result Images and Videos
+
+The results of transformed lights, transformed cameras, transformed and instanced models can be seen below as images and videos.
+
+<video width="640" height="640" controls>
+  <source src="/post_assets/8/davids_camera_no_tlas_basic_split_tiled_250ms.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="640" height="640" controls>
+  <source src="/post_assets/8/davids_no_tlas_basic_split_tiled_250ms.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+<video width="640" height="640" controls>
+  <source src="/post_assets/8/windmill_tlas_exp_split_tiled_450ms.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/chinese_dragon.png">
+  <div class="figcaption"><br>Chinese Dragon<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/dragon_metal.png">
+  <div class="figcaption"><br>Metal Dragon<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/ellipsoids.png">
+  <div class="figcaption"><br>Ellipsoids<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/glaring_davids.png">
+  <div class="figcaption"><br>Glaring Davids<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/grass_desert.png">
+  <div class="figcaption"><br>Grass Desert<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/lobster.png">
+  <div class="figcaption"><br>Lobster<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/marching_dragons.png">
+  <div class="figcaption"><br>Marching Dragons<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/metal_glass_plates.png">
+  <div class="figcaption"><br>Metal Glass Plates<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/scienceTree.png">
+  <div class="figcaption"><br>Science Tree<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/simple_transform.png">
+  <div class="figcaption"><br>Simple Transform<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/spheres.png">
+  <div class="figcaption"><br>Spheres<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/ton_Roosendaal_smooth.png">
+  <div class="figcaption"><br>Ton Roosendaal<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/two_berserkers.png">
+  <div class="figcaption"><br>Two Berserkers<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/8/tests/windmill_000.png">
+  <div class="figcaption"><br>Windmill<br>
+  </div>
+</div>
+
 
 # References
 
