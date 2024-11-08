@@ -37,6 +37,8 @@ And voila, I have a BVH structure that can handle the scene with millions of tri
   <img src="/post_assets/8/chinese_dragon_noisy_old_threading_789.png">
   <div class="figcaption"><br>Dragon model with BVH structure rendered in 789ms<br>
   </div>
+</div>
+
 
   Before the BVH structure, the same scene was rendered in 15-20 mins. This is a huge improvement, like 20x faster.
 
@@ -45,6 +47,7 @@ And voila, I have a BVH structure that can handle the scene with millions of tri
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/8/chinese_dragon_no_noise.png">
   <div class="figcaption"><br>Dragon model without artifacts in 730ms<br>
+  </div>
 </div>
 
 # Tiled Multithreading
@@ -128,6 +131,7 @@ After this implementation, we can have multiple instances of the same model with
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/8/marching_dragons.png">
   <div class="figcaption"><br>9 Dragon instances rendered in 1188ms<br>
+  </div>
 </div>
 
 ## Issue with Normals
@@ -137,12 +141,19 @@ While implementing the transformations, I realized that the normals are not tran
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/8/grass_desert_wrong.png">
   <div class="figcaption"><br>Faulty normals of the grass<br>
+  </div>
 </div>
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/8/grass_desert_correct.png">
   <div class="figcaption"><br>Correct version of the normals rendered in 6679ms<br>
+  </div>
 </div>
+
+
+# Back to the BVH, is a better split possible?
+
+While testing the BVH structure, some scenes, didn't render as fast as I expected. While experimenting with some stuff on the code, I noticed that some leaf nodes didn't split any triangles, and have all the triangles in one child which can have like 240 triangles which is bad. To solve this issue I tried to split the triangles equally, for each axis, I tried different split points and calculated the cost of the split. I used a very basic cost function, which is the count difference between the nodes after we split them. Then I used the minimun cost split point for the split. This approach worked well, and the render times decreased for some meshes. However, for some meshes like the dragon model, the render time increased. I believe this is the result of my cost functions, it can work well for meshes with longer triangles, however bad for meshes with shorter and smaller triangles. I am not exactly sure this is the cause, it is just a guess and needs further investigation.
 
 
 
