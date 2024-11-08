@@ -177,14 +177,16 @@ The results for the windmill scene were satisfying, the render time decreased fr
 
 # Timings with Different Approaches
 
-Scene | Basic BVH | Better Split BVH | TLAS BVH
---- | --- | --- | ---
-Dragon | 730ms | 730ms | 730ms
-Windmill | 1080ms | 484ms | 419ms
+Scene | Half Split BVH Tiled MP | Experimental Split BVH Tiled MP | Half Split TLAS BVH Tiled MP | Experimental Split TLAS BVH Tiled MP | Experimental Split BVH Basic MP
+--- | --- | --- | --- | --- | ---
+Dragon | 60ms | 60ms | 60ms | 60ms | 730ms
+Windmill | 484ms | 484ms | 419ms | 419ms | 1080ms
+Grass | 6679ms | 6679ms | 7226ms | 7226ms | 6679ms
+
 
 
 # References
 
-“Jacco Bikker,. How to build a BVH.” https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics/
+“Jacco Bikker,. How to build a BVH.” https://jacco.ompf2.com/2022/04/13/how-to-build-a-bvh-part-1-basics
 
 Ahmet Oğuz Akyüz, Lecture Slides from CENG795 Advanced Ray Tracing, Middle East Technical University
