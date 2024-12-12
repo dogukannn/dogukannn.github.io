@@ -154,6 +154,12 @@ After we calculate the tangent and bitangent vectors, we can use these vectors t
   </div>
 </div>
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/10/brickwall_with_normalmap.png">
+  <div class="figcaption"><br>Normal map applied to a cube<br>
+  </div>
+</div>
+
 # Bump Mapping
 
 The normal mapping method is not the only method to create more detailed models. We can use the bump mapping method to create more detailed models. The bump mapping method is similar to the normal mapping method, however, instead of using the normal values from the textures, we can use the height values from the textures to create more detailed models. To do so, we can just sample the height values from the textures and use them to create a new intersection point which is displaced from the original intersection point. After that we can use this new intersection point to calculate the normal values of the intersection point. To do so, we can just use the partial derivatives of the height values to calculate the tangent and bitangent vectors of the intersection point. To calculate the partial derivates with the displaced point we can use the chain rule. After that we can use these vectors to calculate the normal values of the intersection point.
@@ -218,14 +224,73 @@ This calculation gave results that are looking bumpy, however the results are no
   </div>
 </div>
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/10/bump_mapping_transformed.png">
+  <div class="figcaption"><br>Bump mapping applied to a transformed model<br>
+  </div>
+</div>
 
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/10/mytap_final.png">
+  <div class="figcaption"><br>Bump mapping applied to a transformed model<br>
+  </div>
+</div>
 
 # Perlin Noise
 
-## Surface Gradients with Perlin Noise
+To create procedural effects we can create textures with perlin noise. Perlin noise is a type of gradient noise which is created by interpolating random values from the 3D points, which will have continuity and consistent results. I won't go into the details of the perlin noise (you can see the details from [one of my older posts in which I create a terrain using perlin noise with geometry shaders](https://dogukannn.github.io/2022/06/10/terrain-rendering-with-perlin-noise.html)), however, I will show how to apply bump mapping with perlin noise using surface gradients. To do so we just need to calculate the gradient of the perlin texture on the given point and use it to calculate the normal values of the intersection point. Below you can see the results of the perlin noise bump mapping.
 
+```cpp
+auto pv = perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p).x();
 
+float eps = 0.0001f;
+auto dx = perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p + vec3(eps, 0, 0)) - perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p);
+auto dy = perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p + vec3(0, eps, 0)) - perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p);
+auto dz = perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p + vec3(0, 0, eps)) - perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p);
 
+auto gradient = vec3(dx.x(), dy.x(), dz.x()) / eps;
+auto g2 = dot(gradient, normal) * normal;
+auto g1 = gradient - g2;
+
+rec.normal = unit(normal - g1);
+```
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/10/sphere_perlin_bump.png">
+  <div class="figcaption"><br>Perlin noise bump mapping applied to a sphere<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/10/cube_perlin_bump.png">
+  <div class="figcaption"><br>Perlin noise bump mapping applied to a cube<br>
+  </div>
+</div>
+
+And we can use the perlin noise directly as color values as seen bleow.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/10/sphere_perlin.png">
+  <div class="figcaption"><br>Perlin noise applied to a sphere<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/10/sphere_perlin_scale.png">
+  <div class="figcaption"><br>Perlin noise applied to a sphere with scale<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/10/dragon_new.png">
+  <div class="figcaption"><br>Perlin noise applied to a dragon model<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/10/ellipsoids_texture.png">
+  <div class="figcaption"><br>Different textures applied to a bunch of ellipsoids<br>
+  </div>
+</div>
 
 # References
 
