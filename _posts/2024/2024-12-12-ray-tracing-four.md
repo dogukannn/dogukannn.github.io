@@ -280,15 +280,16 @@ And we can use the perlin noise directly as color values as seen bleow.
   </div>
 </div>
 
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/dragon_new.png">
-  <div class="figcaption"><br>Perlin noise applied to a dragon model<br>
-  </div>
-</div>
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/10/ellipsoids_texture.png">
   <div class="figcaption"><br>Different textures applied to a bunch of ellipsoids<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/10/dragon_new.png">
+  <div class="figcaption"><br>Perlin noise applied to a dragon model<br>
   </div>
 </div>
 
