@@ -1,296 +1,226 @@
 ---
 layout: post
 published: true
-title: Adventures With CPU Ray Tracer - Increasing Details With Textures
-date: '2024-12-12 12:00'
+title: Adventures With CPU Ray Tracer - Multisampling 
+date: '2024-11-27 12:00'
 image: /post_assets/9/post_image.png
-excerpt: Here we will implement texture sampling methods, normal mapping and bump mapping.
+excerpt: Here we will implement multisampling to our CPU ray tracer.
 comments: true
-share-img: /post_assets/10/post_image.png
+share-img: /post_assets/9/post_image.png
 ---
 
-In this post, I will explain the implemenation of texture sampling methods. After that I will explain how to implement normal mapping and bump mapping. In the end I will show how to create procedural textures with perlin noise, and will use these as bump maps.
+In this part, we will implement multisampling to our ray tracer. We hope that we can reduce aliasing artifacts which caused by not having enough samples for the world that we are trying to capture. After that we will discover some techniques which takes advantage of the multisampling without adding too much computational cost.
 
-# Texture Sampling
+# Multisampling
 
-To create a colorful model we can chane the materials of the triangles, or vertices and then interpolate them inside the triangle, however to create realistic looking models we just need more resolution. If we try to achieve this with triangles and vertices, we would need too much vertices that will slow our raytracer down. Instead we can sample the colors on our models from 2D images. To map 2D images into our model we will need to project our models into 2D plane, which is called "UV Unwrapping", in the essence this process will lay all the triangles down to the 2D plane and gave each vertex a ssecondary coordinate with 2 values, u and v. After that we can sample the colors from the image with these coordinates. For triangle meshes when we intersect with a triangle, we can get the barycentric coordinates of the intersection point and use these to interpolate the u and v values of the intersection point. After that we can use these values to sample the color from the image.
+For the multisampling, we just need to sample multiple times from each pixel point and take the average of the colors. To do so without changing our code so much, we can just create two random floats for each sample and than we can use it to offfset our u and v values which are the floating point coordinates of the screen space. 
 
-```cpp
-//calculate barycentric coords, and interpolate uv
-vec3 v0v1 = v1 - v0;
-vec3 v0v2 = v2 - v0;
-vec3 v0p = P - v0;
-
-float d00 = dot(v0v1, v0v1);
-float d01 = dot(v0v1, v0v2);
-float d11 = dot(v0v2, v0v2);
-float d20 = dot(v0p, v0v1);
-float d21 = dot(v0p, v0v2);
-
-float denom = d00 * d11 - d01 * d01;
-float v = (d11 * d20 - d01 * d21) / denom;
-float w = (d00 * d21 - d01 * d20) / denom;
-float u = 1.0f - v - w;
-```
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/cube_wall.png">
-  <div class="figcaption"><br>Brick wall texture mapped onto a cube, values replacing diffuse reflectance<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/wood_box.png">
-  <div class="figcaption"><br>Wood texture mapped onto a cube, values replacing diffuse reflectance<br>
-  </div>
-</div>
-
-
-For the speres, we can use the spherical coordinates to map the texture onto the sphere. To do so we can use the following code snippet, which calculates the angles between the intersection point and the center of the sphere. After that we can use these angles to calculate the u and v values of the intersection point.
+To sample uniform random numbers, we can use the following code which is Merseene Twister random number generator implemented in C++ standard library.
 
 ```cpp
-auto xyz = r.at(rec.t) - center;
+inline std::mt19937 gen;
+inline std::uniform_real_distribution<float> dis(0.0f, 1.0f);
 
-auto theta = std::acos(xyz.y() / radius);
-auto phi = std::atan2(xyz.z() , xyz.x());
-
-rec.uv.e[0] = (-phi + pi) / (2 * pi);
-rec.uv.e[1] = theta / pi;
-```
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/sphere_nobump_bump.png">
-  <div class="figcaption"><br>Earth texture mapped onto a sphere, left is a bumped version which I will cover later on<br>
-  </div>
-</div>
-
-## Nearest Neighbor Sampling vs Bilinear Sampling
-
-To sample the colors from the image, we can use different methods, nearest neighbor will be the simplest one which will get the value of the nearest pixel on the image. However, this can create aliasing artifacts on the images with edges. To improve the situation we can just get sample from the nearest 4 pixels and interpolate the colors with the distance of the intersection point to the pixels. This method is called bilinear sampling.
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/sphere_nearest_bilinear.png">
-  <div class="figcaption"><br>Nearest neighbor sampling vs bilinear sampling<br>
-  </div>
-</div>
-
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/plane_nearest.png">
-  <div class="figcaption"><br>Nearest neighbor sampling<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/plane_trilinear.png">
-  <div class="figcaption"><br>Bilinear sampling<br>
-  </div>
-</div>
-
-# Normal Mapping
-
-We can get more detail from the textures besides the color values. We can use the normal values from the textures to create more detailed models. Which can create a visual effect of more detailed models without changing the geometry. However, we can't just sample from the textures and use them as normals, because the normals can change with the transformation of the model. If we just use the world space normals from the textures, the normals will be wrong when the model is rotated or scaled. However, there is a fix for this, we can just define another space for the normals which remains unchanged when the model is transformed. This space is called the tangent space. To define the tangent space, we can just use the tangent and bitangent vectors of the model. The tangent vector is the vector that is perpendicular to the u axis of the UV coordinates, and the bitangent vector is the vector that is perpendicular to the v axis of the UV coordinates.
-
-## Tangents and Bitangents
-
-At the begining, I thought if we have a normal map we can just use it on the every renderer and get same results. However, then I noticed that there are infinite number of tangents and bitangents for a intersection point on a mesh. To fix this problem, there are some methods, which the industry not quite agreed on. I found online that the MikkTSpace is the most popular one which aims to create a consistent tangent space for the models. It's purpose is to create a tangent space which is consistent with the model's geometry, importing order and such. However, we will not use this method for this post, and we will use the "dPdu" and "dPdv" vectors to calculate the tangent and bitangent vectors, which are the partial derivatives of the position vector with respect to the u and v values of the UV coordinates.
-
-For triangles, we can use the following code snippet to calculate the tangent and bitangent vectors.
-
-```cpp
-vec2 deltaUV1 = uv2 - uv1;
-vec2 deltaUV2 = uv3 - uv1;
-vec2 duv02 = uv1 - uv3, duv12 = uv2 - uv3;
-vec3 dp02 = p1 - p3, dp12 = p2 - p3;
-float determinant = duv02[0] * duv12[1] - duv02[1] * duv12[0];
-if (determinant < 0.1f && determinant > -0.1f) {
-      CoordinateSystem(unit(cross(p3 - p1, p2 - p1)), rec.dpdu, rec.dpdv);
-} else {
-  rec.tangent = (tv0v1 * deltaUV2.y() - tv0v2 * deltaUV1.y()) / (deltaUV1.x() * deltaUV2.y() - deltaUV1.y() * deltaUV2.x());
-  rec.bitangent = (tv0v2 * deltaUV1.x() - tv0v1 * deltaUV2.x()) / (deltaUV1.x() * deltaUV2.y() - deltaUV1.y() * deltaUV2.x());
+inline float frandom()
+{
+	return dis(gen);
 }
 ```
 
-You can see the determinant check in the code snippet, this is to check if the triangle is degenerate or not. If the determinant is close to zero, the triangle is degenerate and needs to be handled differently. In this case, we can just use the cross product of the two edges of the triangle to get the normal of the triangle and use it to create a orthogonal basis for the tangent space.
+At first, I placed the generator objects in the random function which caused the generator to be reinitialized every time the function is called. This caused the random numbers to be the same for each sample. To fix this, I placed the generator objects outside as persistent objects for each call to the function.
 
-
-For the spheres, we can use the following code snippet to calculate the tangent and bitangent vectors, which is the result of the mathematical derivation of the partial derivatives.
-
-```cpp
-vec3 tangent, bitangent;
-tangent = (vec3(2.0 * pi * xyz.z(), 0.0, -2.0 * pi *(xyz.x())));
-bitangent = (vec3(pi * xyz.y() * cos(phi), -pi * radius * sin(theta), pi * xyz.y() * sin(phi)));
-```
-
-After we calculate the tangent and bitangent vectors, we can use these vectors to transform the normal values from the textures to the tangent space. Below you can see a normal map of a cushion, and the values are close to blue, which you can see on the normal maps frequently. The reaseon behind it is that the normal maps are in tangent space which is defined with Tangent, Bitangent and Normal vectors respectively. And the normal maps tends to not change the normals too much to prevent causing visual artifacts, which makes the normal maps to be close to blue.
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/cushion.png">
-  <div class="figcaption"><br><br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/cube_cushion.png">
-  <div class="figcaption"><br>Normal map applied to a cube<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/cube_waves.png">
-  <div class="figcaption"><br>Normal map applied to a cube<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/sphere_normal.png">
-  <div class="figcaption"><br>Normal map applied to a sphere<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/cube_wall_normal.png">
-  <div class="figcaption"><br>Normal map applied to a cube<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/brickwall_with_normalmap.png">
-  <div class="figcaption"><br>Normal map applied to a cube<br>
-  </div>
-</div>
-
-# Bump Mapping
-
-The normal mapping method is not the only method to create more detailed models. We can use the bump mapping method to create more detailed models. The bump mapping method is similar to the normal mapping method, however, instead of using the normal values from the textures, we can use the height values from the textures to create more detailed models. To do so, we can just sample the height values from the textures and use them to create a new intersection point which is displaced from the original intersection point. After that we can use this new intersection point to calculate the normal values of the intersection point. To do so, we can just use the partial derivatives of the height values to calculate the tangent and bitangent vectors of the intersection point. To calculate the partial derivates with the displaced point we can use the chain rule. After that we can use these vectors to calculate the normal values of the intersection point.
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/chain_rule.png">
-  <div class="figcaption"><br><br>
-  </div>
-</div>
-
-To calculate the partial derivatives of the height values, we can use the following code snippet.
+After that I added the following code to sample random points for each pixel.
 
 ```cpp
-color bump_bottom, bump_left, bump_top, bump_right;
-rec.mat_ptr->bump_map->area_values(uv.x(), uv.y(), rec.p, bump_top, bump_bottom, bump_left, bump_right);
-
-float l0 = bump_value.luminance();
-float l1 = bump_right.luminance();
-float l2 = bump_top.luminance();
-
-rec.p = rec.p  + rec.normal * l0 * rec.mat_ptr->bump_factor;
-
-auto delu = 1.0f / (float)rec.mat_ptr->bump_map->width;
-auto delv = 1.0f / (float)rec.mat_ptr->bump_map->height;
-
-auto dqdu = tangent + ((l1 - l0)) * rec.mat_ptr->bump_factor * normal / delu;
-auto dqdv = bitangent + (k * (l2 - l0)) * rec.mat_ptr->bump_factor * normal / delv;
-
-rec.normal = unit(cross(dqdv, dqdu));
+auto sample_u_offset = frandom();
+auto sample_v_offset = frandom();
+const auto u = (i + sample_u_offset) / (float)(imageWidth);
+const auto v = (j + sample_v_offset) / (float)(imageHeight);
 ```
 
-This calculation gave results that are looking bumpy, however the results are noticably more bumpier than the reference images, I tried to fix this by halving the uminance values I sampled from the image however, the results are still off. In the end, I reverted this change to be more consistent with my implementation.
+For constructing the final color, we just need to average the colors of the samples. To do so, we can just add the colors of the samples and divide it by the number of samples.
 
+Just with the multisampling we can see the difference in the final image. The aliasing artifacts in the edges are significantly reduced with bigger number of samples.
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/sphere_nobump_bump.png">
-  <div class="figcaption"><br>Earth texture mapped onto a sphere with bump values<br>
+  <img src="/post_assets/9/edgealias.png">
+  <div class="figcaption"><br>Difference can be seen in the edges ot the objects<br>
   </div>
 </div>
 
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/sphere_nobump_justbump.png">
-  <div class="figcaption"><br>Earth texture mapped onto a sphere with bump values<br>
-  </div>
-</div>
+# Depth of Field
 
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/wood_box_all.png">
-  <div class="figcaption"><br>Wood texture mapped onto a cube with bump values<br>
-  </div>
-</div>
+To achieve the depth of field effect, we need to simulate the camera lens. To do so we can think of an imaginary lens between our image plane and a focal plane (the plane where the objects are in focus). After that we can pick random points from lens and after that we can send rays from that point to the focal plane. This way for every sample, if the ray hits some triangle near the focal plane it won't be blurred, but if as the ray goes further from the focal plane, the image will be blurred.
 
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/killeroo_bump_walls.png">
-  <div class="figcaption"><br>Wall texture mapped onto a cube with bump values<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/galactica_dynamic.png">
-  <div class="figcaption"><br>Bump mapping applied to a spaceship with motion blur<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/bump_mapping_transformed.png">
-  <div class="figcaption"><br>Bump mapping applied to a transformed model<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/mytap_final.png">
-  <div class="figcaption"><br>Bump mapping applied to a transformed model<br>
-  </div>
-</div>
-
-# Perlin Noise
-
-To create procedural effects we can create textures with perlin noise. Perlin noise is a type of gradient noise which is created by interpolating random values from the 3D points, which will have continuity and consistent results. I won't go into the details of the perlin noise (you can see the details from [one of my older posts in which I create a terrain using perlin noise with geometry shaders](https://dogukannn.github.io/2022/06/10/terrain-rendering-with-perlin-noise.html)), however, I will show how to apply bump mapping with perlin noise using surface gradients. To do so we just need to calculate the gradient of the perlin texture on the given point and use it to calculate the normal values of the intersection point. Below you can see the results of the perlin noise bump mapping.
+The following code snippet shows how we can achieve this effect. Two random points picked, as imagining the lens as a square will help us to sample uniformly.
 
 ```cpp
-auto pv = perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p).x();
+ray getRay(float se, float te) const
+{
+  if(!dof_enabled)
+    return ray(origin,  lowerLeftCorner + se * horizontal + te * vertical - origin);
 
-float eps = 0.0001f;
-auto dx = perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p + vec3(eps, 0, 0)) - perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p);
-auto dy = perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p + vec3(0, eps, 0)) - perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p);
-auto dz = perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p + vec3(0, 0, eps)) - perlin_texture->value(rec.uv.x(), rec.uv.y(), rec.p);
+  auto q = lowerLeftCorner + se * horizontal + te * vertical;
+  auto s = origin + (aperture * u * lens_x_offset) + (aperture * v * lens_y_offset);
+  auto direction = unit(origin - q);
 
-auto gradient = vec3(dx.x(), dy.x(), dz.x()) / eps;
-auto g2 = dot(gradient, normal) * normal;
-auto g1 = gradient - g2;
+  auto tfd = focusDistance / dot(direction, -w);
+  ray r(origin, direction);
+  auto p = r.at(tfd);
+  auto d = p - s;
 
-rec.normal = unit(normal - g1);
+  return ray(s, d);
+}
 ```
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/sphere_perlin_bump.png">
-  <div class="figcaption"><br>Perlin noise bump mapping applied to a sphere<br>
+  <img src="/post_assets/9/dof1.png">
+  <div class="figcaption"><br>Dragon models with Depth Of Field effect<br>
   </div>
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/cube_perlin_bump.png">
-  <div class="figcaption"><br>Perlin noise bump mapping applied to a cube<br>
+  <img src="/post_assets/9/dof2.png">
+  <div class="figcaption"><br>Spheres with Depth Of Field effect<br>
   </div>
 </div>
 
-And we can use the perlin noise directly as color values as seen bleow.
+# Motion Blur
 
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/sphere_perlin.png">
-  <div class="figcaption"><br>Perlin noise applied to a sphere<br>
-  </div>
-</div>
+To achieve the motion blur, we need to move our objects in a way that they will be in different positions in different samples. To do so we can just use a motion vector, and for each sample we can move the objects according to this vector multiplied with a random float. At my first implementation I used a different random point each time a object's model matrix is used, however this lead to wrong intersection and bounding box calculations for the BVH. To fix this, I used the same random point for each sample, and it fixed my problem.
 
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/sphere_perlin_scale.png">
-  <div class="figcaption"><br>Perlin noise applied to a sphere with scale<br>
-  </div>
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/dragon_new.png">
-  <div class="figcaption"><br>Perlin noise applied to a dragon model<br>
-  </div>
-</div>
+```cpp
+if(object->has_motion_blur)
+{
+  vec3 random_motion = object->motion * motion_blur_mp;
+  mat4 translation = mat4::translate(random_motion.x(), random_motion.y(), random_motion.z());
+  model = translation * object->model;
+}
+```
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/10/ellipsoids_texture.png">
-  <div class="figcaption"><br>Different textures applied to a bunch of ellipsoids<br>
+  <img src="/post_assets/9/motionblur1.png">
+  <div class="figcaption"><br>Cornellbox with motion blur effect<br>
   </div>
 </div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/9/motionblur2.png">
+  <div class="figcaption"><br>Dragons with motion blur effect<br>
+  </div>
+</div>
+
+# Glossy surfaces
+
+To achieve the effect of glossiness, we can use a roughness value for mirror, dielectric and conductor materials. And for each material we can divert the reflected ray from the surface normal by a random angle. This requires us defining a local coordinate system for our reflected rays. After that we can use two random points and roughness value to multiply the new axis vectors of the local system.
+
+We can use the following code to achieve this effect.
+
+```cpp
+if(has_roughness)
+{
+
+  auto r = unit(reflected);
+  auto rp = create_non_colinear_vector(r);
+  auto u = unit(cross(r, rp));
+  auto v = unit(cross(r, u));
+
+  auto rr = unit(r + u * roughness * ((frandom() - 0.5f) * 1.0f) + v * roughness * ((frandom() - 0.5f) * 1.0f));
+  return ray(rec.p, rr);
+}
+```
+
+To create a non colinear vector, we can set the absolute minimum component of the vector to 1.0. This can be achieved in different manners however for now this will be sufficient.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/9/glossy1.png">
+  <div class="figcaption"><br>Cornellbox with glossy surfaces<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/9/glossy2.png">
+  <div class="figcaption"><br>Rough metal surface and blurry glasses<br>
+  </div>
+</div>
+
+# Area Lights
+
+To achieve area lights, we can sample a random point for our light area and adjust the formula to approximate the irradiance. To sample a random point in the light area, we can just use the same logic as we used in the glossy surfaces, we can define a local coordinate system from the normal vector of our plane which defines an area light. After that we can use two random points to sample a point in the light area which will be limited by the size of the edges of our area light. To add area lights without changing our material code we can define a base lighting interface which will be implemented by the area and point light classes. Which will only need to have get_position and get_intensity functions.
+
+```cpp
+point3 area_light::get_position() const override
+{
+  //create a basis and sample a position
+  vec3 np = create_non_colinear_vector(normal);
+  vec3 u = unit(cross(normal, np));
+  vec3 v = unit(cross(normal, u));
+
+  float u_offset = (- size / 2.0f) + (size)*area_light_u_offset;
+  float v_offset = (- size / 2.0f) + (size)*area_light_v_offset;
+
+  return position + u * u_offset + v * v_offset;
+}
+
+point3 area_light::get_position() const override
+{
+  //create a basis and sample a position
+  vec3 np = create_non_colinear_vector(normal);
+  vec3 u = unit(cross(normal, np));
+  vec3 v = unit(cross(normal, u));
+
+  float u_offset = (- size / 2.0f) + (size)*area_light_u_offset;
+  float v_offset = (- size / 2.0f) + (size)*area_light_v_offset;
+
+  return position + u * u_offset + v * v_offset;
+}
+```
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/9/arealight.png">
+  <div class="figcaption"><br>Cornellbox with area lights<br>
+  </div>
+</div>
+
+# Problems with Camera
+
+In one of the cornellbox scenes, I noticed a bug in my camera implementation. The bug was caused by the fact that I was intersecting the objects before the image plane which caused only a plane to be visible in the scene. To fix this, I just used a minimum t value for the intersection tests which is the distance to the sample in the image plane from the camera origin. After that I noticed a different bug that caused from non symmetrical image plane boundary volumes. In my implementation to calculate the lower left corner of the image plane I was moving the center position by the half of the horizontal and vertical vectors which I was calculated with difference in near plane boundaries and the camera vectors. I fixed this problem by moving the center position by the respected boundary value of the image plane.
+
+Updated camera code is as follows.
+
+```cpp
+camera(point3 lookfrom,
+      point3 lookat,
+      vec3 vup,
+      parser::Vec4f near_plane, 
+    bool _dof_enabled,
+      float _aperture,
+      float _focusDistance,
+      float nearDist)
+{
+  w = unit(lookfrom - lookat);
+  u = unit(cross(vup, w));
+  v = cross(w, u);
+
+  origin = lookfrom;
+  horizontal = (near_plane.y - near_plane.x) * u;
+  vertical = (near_plane.w - near_plane.z) * v;
+  lowerLeftCorner = origin - (unit(horizontal) * fabs(near_plane.x)) - (unit(vertical) * fabs(near_plane.z)) - nearDist * w;
+
+  dof_enabled = _dof_enabled;
+  aperture = _aperture;
+  focusDistance = _focusDistance;
+}
+```
+# Problem with Linux Build
+
+I use windows as my main operating system for C++ development with CMake and Visual Studio, and when I tested my code on linux, I noticed some strange bugs like black images or negated colors on some examples. After a heavy debug session I noticed some different compiler behaviour between MSVC and GCC. The problem was caused by my usage of the abs() function which is defined in the cmath library. The problem was caused by the fact that the abs() function is defined for integer types in the cmath library, and for floating point types it is handled correctly for MSVC but not for GCC. To fix this problem I just used the fabs() function which is defined for floating point types in the cmath library.
+
+# Bonus Video
+
+<video width="640" height="640" controls>
+  <source src="/post_assets/9/tap_water.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
 # References
 
