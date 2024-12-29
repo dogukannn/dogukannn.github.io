@@ -271,7 +271,7 @@ While rendering final images, I encountered a problem with the UV values of the 
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/11/audi-tt-pisa.png">
-  <div class="figcaption"><br>Car model with less samples<br>
+  <div class="figcaption"><br>Car model with less samples but correct shadows and textures, we can see the soft shadows created by the multisampling with different directions<br>
   </div>
 </div>
 
