@@ -122,8 +122,6 @@ In the normal versions of the Bling Phong and the Phong BRDF there is a cosine v
   </div>
 </div>
 
-killeroo_torrancesparrow.png
-
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/killeroo_torrancesparrow.png">
   <div class="figcaption"><br>Killeroo model with Torrance-Sparrow BRDF<br>
@@ -185,7 +183,7 @@ return tri.p1 * (1.0f - sqrt_r1) + tri.p2 * (sqrt_r1 * (1.0f - r2)) + tri.p3 * (
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/cornellbox_jaroslav_diffuse.png">
-  <div class="figcaption"><br>Cornell box with a point light for comparision<br>
+  <div class="figcaption"><br>Cornell box with a point light for comparision, materials are not glossy<br>
   </div>
 </div>
 
@@ -234,337 +232,180 @@ If we apply transformations to the sphere lights, we can create different light 
 
 # Path Tracing With Monte Carlo
 
+To solve the rendering equation, we can use the Monte Carlo Integration, which is a simple way to estimate the integral of the rendering equation. We can sample the directions around the hemisphere, and we can calculate the radiance values for each sample, and we can average the radiance values to get the final radiance value. This way we can estimate the integral of the rendering equation, and we can get the final image.
+A thing to note is that we need to divide each sample with the probability of the sample, as we are using the Monte Carlo Integration, and we need to divide the sum of the samples with the sum of the probabilities of the samples to get the correct value. As the sample number increases, the radiance values will converge to the correct value, and we can get the final image.
+
+The main difference in the implementation is that we need to indirect rays even with the diffuse surfaces, as in real life light bounces around all the surfaces, but with the rough surfaces light can bounce in different directions, so we need to sample the directions around the hemisphere, and we need to calculate the radiance values for each sample. 
+
+As a start we will use uniform sampling as we used in the environmental spherical lights, and like before we will take average of the radiance values to get the final radiance value.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/diffuse_prism.png">
+  <div class="figcaption"><br>Cornell box with a prism light, 100 samples<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/diffuse_sphere_light.png">
+  <div class="figcaption"><br>Cornell box with a sphere light, 400 samples<br>
+  </div>
+</div>
+
+As you can see, the images are noisy, and we need to increase the sample number to get a less noisy image, but this will increase the rendering time, and we need to optimize the path tracing to get a less noisy image with less sample number. 
+
 # Importance Sampling
+
+Importance sampling means that we need to sample directions with the most of the radiance is concentrated. To do this we need to sample from the locations where lights are present or where the BRDFs are concentrated, or with an even simpler approach we can use the cosine weighted sampling. This cosine value comes from the term of the rendering equation, and it effects the total radiance comes from a certain angle with addition to other terms like BRDFs. 
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/cosine_sampling.png">
+  <div class="figcaption"><br>Cosine weighted sampling<br>
+  </div>
+</div>
+
+To implement cosine sampling we need to build an orthogonal basis with the normal of the intersection point, and we need to sample a random point from the hemisphere with respect to the cosine value. Which means that we will be taking more samples from the directions where the cosine value is higher, and we will be taking less samples from the directions where the cosine value is lower. And after calculating the radiance coming from the sample we need to divide the radiance value with the cosine value divided by pi, which is the probability of the sample.
+
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/diffuse_importance_prism.png">
+  <div class="figcaption"><br>Cornell box with a prism light, 100 samples, importance sampling<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/diffuse_importance_sphere_light.png">
+  <div class="figcaption"><br>Cornell box with a sphere light, 400 samples, importance sampling<br>
+  </div>
+</div>
+
+As you can see, the images are less noisy, however not all the noise is gone but this indicates we are on the right track.
 
 # Next Event Estimation
 
+We need to sample from the directions with the most contribition to the radiance, how about sampling from the light sources directly? This is the main idea behind the Next Event Estimation, in each indirect ray we can sample from the light sources directly, and we can calculate the radiance values for each sample. This way we can get the most contribution to the radiance, and we can get a less noisy image with less sample number.
+This technique doesn't introduce any bias to the image, because when we sample from the light sources directly, we treat them like any other ray we sampled randomly.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/diffuse_nee_prism.png">
+  <div class="figcaption"><br>Cornell box with a prism light, 100 samples, Next Event Estimation<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/diffuse_nee_sphere_light.png">
+  <div class="figcaption"><br>Cornell box with a sphere light, 400 samples, Next Event Estimation<br>
+  </div>
+</div>
+
+As seen in the images, the noise are far less, however we introduced new kind of noise which is called fireflies, these are the bright pixels in the image, and they are caused by the direct sampling from the light sources, and they are hard to get rid of.
+
+## Wrong Implementation With Less Noisy Result
+
+While implementing the Next Event Estimation, I was tinkering with the BRDFs and mesh light equations, and in one try, I didn't normalized the wi (light vector) and calculated the cosine values with this unnormalized vector, and I got a way less noisy result with the same number of samples. I didn't quite understand the reasoning behind this, I just wanted to share this with you.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/diffuse_importance_nee_over_correction.png">
+  <div class="figcaption"><br>Cornell box with a sphere light, 100 samples, Importance Sampling, Next Event Estimation, Wrong Calculation<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/diffuse_importance_nee_non_over_corrected.png">
+  <div class="figcaption"><br>Cornell box with a sphere light, 100 samples, Importance Sampling, Next Event Estimation, Correct Calculation<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/glass_importance_nee_weighted_revised.png">
+  <div class="figcaption"><br>Cornell box with a sphere light, 400 samples, Importance Sampling, Next Event Estimation, Correct Calculation, Glass Material<br>
+  </div>
+</div>
+
+# Splitting
+
+While sampling multiple rays from one pixel, we can use another kind of parameter to multiply the samples, which is called splitting. We can split the samples with a certain number from each intersection. This can help us to sample from the intersection points with more samples, and we can sample from where it is important to the final image. 
+
 # Russian Roulette
 
-# Results
+Russian Roulette is a technique to terminate the rays with a certain probability, this way we can reduce the number of samples and we can get a less noisy image with less sample number. We can terminate the rays with a certain probability, and we can multiply the radiance values with the inverse of the probability, this way we can get the correct radiance values. While implementing this I used the maximum component of the diffuse and speculer reflectance values, I didn't use the length of these values, because if a materials red reflectance is 1.0, it will be an important ray to our image, even if the other components are 0.0. I killed rays before the splitting happens because with this way I get faster and more accurate results.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/diffuse_importance_nee_russian_splitting_2.png">
+  <div class="figcaption"><br>Cornell box with a sphere light, 25 samples, Importance Sampling, Next Event Estimation, Russian Roulette, Rays Splitting into 2<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/diffuse_importance_nee_russian_splitting_3.png">
+  <div class="figcaption"><br>Cornell box with a sphere light, 25 samples, Importance Sampling, Next Event Estimation, Russian Roulette, Rays Splitting into 3<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/diffuse_importance_nee_russian_splitting_4.png">
+  <div class="figcaption"><br>Cornell box with a sphere light, 25 samples, Importance Sampling, Next Event Estimation, Russian Roulette, Rays Splitting into 4<br>
+  </div>
+</div>
+
+These results are far less noisy from the point that we are started, and looking realistic with all the color blendings and soft shadows.
 
 # Bloopers
 
-# References
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Spot Light
-
-After implementing point lights, spot lights can achieve a realisctic lighting effect without much effort. The only difference between a point light and a spot light is that spot light only lights an area in a direction, we can apply it to the equations by a direction vector and a cutoff and falloff angle. The intensity of the light will be calculated by the angle between the direction vector and the vector from the light source to the point, with respect to the cutoff and falloff angles.
-
-```cpp
-color get_intensity(vec3 wi) const override
-{
-  float angle = glm::acos(glm::dot(glm::normalize(direction), glm::normalize(-wi)));
-
-  if (angle > coverage)
-    return color(0.0f);
-  else if (angle < falloff)
-    return intensity;
-  else
-  {
-    float d = glm::cos(angle) - glm::cos(coverage);
-    float n = glm::cos(falloff) - glm::cos(coverage);
-    float s = powf(d/n, 4.0f);
-    return intensity * s;
-  }
-}
-```
+While implementing the path tracing, I encountered several problems producing some fun results, I wanted to share them with you.
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/dragon_spot_light_msaa.png">
-  <div class="figcaption"><br>Dragon model with a spot light<br>
-  </div>
+  <img src="/post_assets/12/bloopers/1.png">
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/dragon_new_with_spot.png">
-  <div class="figcaption"><br>Different dragon model with tree spot lights<br>
-  </div>
+  <img src="/post_assets/12/bloopers/2.png">
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/dragon_new_with_spot_red.png">
-  <div class="figcaption"><br>Same scene with a parser error, making it a bit scarier<br>
-  </div>
-</div>
-
-# Directional Light
-
-Directional light is even simpler to implement, as it is a light source that is infinitely far away, and has a constant direction. This can be used to simulate sunlight, or any other light source that is far away from the scene. The intensity of the light is constant, and the direction is the same for all points in the scene.
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/cube_directional.png">
-  <div class="figcaption"><br>Cube with a directional light present<br>
-  </div>
-</div>
-
-# Spherical Directional Light (as Environmental Light)
-
-We can think of environmental lights as spheres that encase the scene, and emit light from all directions. This can be used to simulate the light coming from the sky, or any light present in the environmental map. The intensity that we get from the environmental map image needs to present a more wide range of values than the other light sources, as it is a light source that is present in all directions, as there are non-light sources will be present in these images. To properly mimic these spherical directional lights we can use HDR images, which have a higher range of values than the usual 0-1 range. The light sources in these images will be greater than 1.0. 
-
-We will use two types of environmental maps, one is a simple image that is mapped to a sphere, and the other is a latidude-longitude map.
-
-## Latidude-Longitude Mapping (Panaromic)
-
-From the direction we can calculate the UV coordinates of the image, like the code snippet below. This is also known as an equirectangular mapping, it maps the direction's azimuth to the horizontal coordinate and its elevation to the vertical coordinate of the image.
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/campus_probe_latlong.png">
-  <div class="figcaption"><br>Latidude-Longitude Map<br>
-  </div>
-</div>
-
-```cpp
-vec3 dir = generateUpperHemisphereVector();
-float u = (1.0f + (atan2(dir.x, -dir.z) / pi) ) / 2.0f;
-float v = acos(dir.y) / pi;
-
-color c = env_texture->value(u, v, dir) * 2.0f * pi;
-out_direction = dir;
-out_intensity = c;
-```
-
-## Spherical Mapping
-
-The other type of environmental map is a simple image that is mapped to a sphere. The center of image corresponds to the forward (-z) direction, and the circumference is the backward (+z) direction. The horizontal line linearly maps the azimuthal angle to the pixel coordinate.
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/campus_probe.png">
-  <div class="figcaption"><br>Spherical Map<br>
-  </div>
-</div>
-
-
-```cpp
-vec3 dir = generateUpperHemisphereVector();
-float r = (1.0f / pi) * ((acos(-dir.z) / sqrtf(dir.x * dir.x + dir.y * dir.y)));
-float u = (r * dir.x + 1) / 2.0f;
-float v = (r * -dir.y + 1) / 2.0f;
-
-color c = env_texture->value(u, v, dir) * 2.0f * pi;
-out_direction = dir;
-out_intensity = c;
-```
-
-## Sampling Directions with Rejection Sampling and Bugs
-
-To sample from these images, we need a direction vector as we treat this images as the spheres. We can use rejection sampling in order to get a random direction in the upper hemisphere. While implementing this part I encountered a problem with my sampling code, when I sample a direction from a intersection point I always take the upper hemisphere as the unit spheres, +z part. This caused images being darker than they should be on the edges, and faces pointing below. After some time trying to find a magical eqauations which increases the brightness as the angle between the view direction and the normal increases, I realized that I was sampling the wrong hemisphere. I should adjust the angle of the hemisphere with the normal vector of the intersection point. Which is easy to do with the rejection sampling, as we can just sample a random direction and check if it's dot product with the normal is positive or not.
-
-```cpp
-vec3 dir = generaterRandomUnitVector();
-while (dot(dir, normal) < 0.0f)
-{
-  dir = generaterRandomUnitVector();
-}
-```
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/head_env_light_sampling_error.png">
-  <div class="figcaption"><br>Lights sampled with wrong directions, faces near the object outlines appear darker<br>
-  </div>
+  <img src="/post_assets/12/bloopers/3.png">
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/head_env_light.png">
-  <div class="figcaption"><br>Lights sampled with correct directions<br>
-  </div>
-</div>
-
-# Color Adjustments for HDR Rendering
-
-Until now, the code worked on the 0.0f-255.0f range, as to mimic the 8bit color range calculations on the pipeline, and in the end the values are clamped. After the HDR mapping implementations, the color values can be larger than the floating point's precision limits (>1m), which causes problems. To fix this, I adjusted the code to work in the 0.0f-1.0f range as default range, and HDR range extends this range. This way, the calculations will be more precise and the final image will be more accurate.
-
-# Tonemapping (Photographic TMO)
-
-To display the final image, we need to apply some tonemapping calculations to display HDR range properly, as the monitors can only display a limited range of values. The most common tonemapping algorithm is Reinhard's tonemapping operator, which is a simple and effective way to display HDR images. 
-
-At the first part of this algorithm, we map the luminance range of the image to the 0.0f-1.0f range, by calculating the average luminance of the image. The most used default key for this mapping is 0.18f, which is mapped to the middle gray value (log-average-luminance) on image. 
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/mapping.png">
-  <div class="figcaption"><br><br>
-  </div>
-</div>
-
-After the first step, we will compress the luminance values with sigmoidal compression, and we can apply a burnout effect to the bright areas of the image.
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/sigmoidal_tmo.png">
-  <div class="figcaption"><br>Sigmoidal compresiion<br>
-  </div>
+  <img src="/post_assets/12/bloopers/4.png">
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/burnout_tmo.png">
-  <div class="figcaption"><br>Compression with burnout values<br>
-  </div>
-</div>
-
-In the end to display images in .png format (LDR), we need to convert the values back to 0-255 range, and clamp the values to this range.
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/rgb_conv.png">
-  <div class="figcaption"><br>Compression with burnout values<br>
-  </div>
-</div>
-
-Final code is like as below:
-
-```cpp
-int pixel_count = imageWidth * imageHeight;
-float epsilon = 1e-5;
-
-std::vector<float> luminance_values;
-luminance_values.reserve(pixel_count);
-float total_log_luminance = 0.0f;
-for (int j = imageHeight - 1; j >= 0; j--)
-{
-  for (int i = 0; i < imageWidth; i++)
-  {
-    color c = img[j][i];
-    float luminance_world = luminance(c);
-    total_log_luminance += log(epsilon + luminance_world);
-  }
-}
-
-float lwp = exp((1.0f / pixel_count) * total_log_luminance);
-
-for (int j = imageHeight - 1; j >= 0; j--)
-{
-  for (int i = 0; i < imageWidth; i++)
-  {
-    color c = img[j][i];
-    float l = (scene_cam.key_value / lwp) * luminance(c);
-    luminance_values.push_back(l);
-  }
-}
-
-std::sort(luminance_values.begin(), luminance_values.end());
-
-//get the burnout percentage
-float burnout_percentage = scene_cam.burn_percent / 100.0f;
-float lwhite = 0.0f;
-if (scene_cam.burn_percent != 0.0f)
-{
-  int burnout_index = (int)(pixel_count * (1.0f - burnout_percentage));
-  lwhite = luminance_values[burnout_index];
-}
-
-for (int j = imageHeight - 1; j >= 0; j--)
-{
-  for (int i = 0; i < imageWidth; i++)
-  {
-    color& c = img[j][i];
-
-    float ld = 1.0f;
-    if(scene_cam.burn_percent != 0.0f)
-    {
-      //eq 4
-      float l = (scene_cam.key_value / lwp) * luminance(c);
-      ld = (l * (1.0f + (l / (lwhite * lwhite)))) / (1.0f + l);
-    }
-    else
-    {
-      float l = (scene_cam.key_value * luminance(c)) / lwp;
-      ld = l / (l + 1.0f);
-    }
-
-    auto tmpc = c;
-    if(luminance(c) < 0.00001f)
-    {
-      continue;
-    }
-
-    float lum = luminance(c);
-    c.x = ld * (powf(c.x / lum, scene_cam.saturation));
-    c.y = ld * (powf(c.y / lum, scene_cam.saturation));
-    c.z = ld * (powf(c.z / lum, scene_cam.saturation));
-
-  }
-}
-```
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/cube_point.png">
-  <div class="figcaption"><br>Cube and a point light without tonemapping<br>
-  </div>
+  <img src="/post_assets/12/bloopers/5.png">
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/cube_point_hdr.png">
-  <div class="figcaption"><br>Cube and a point light with tonemapping<br>
-  </div>
-</div>
-
-# Negative UV values
-
-While rendering final images, I encountered a problem with the UV values of the image, as the values were negative. This caused wrong textures on images, which I noticed after rendering a car model with 1600 samples in 1 hour. At first, I tried to clamp values, applyind modulo opearations, but none of them gave correct results, in the end the fix was simple, I just take the absolute value of the UV coordinates.
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/audi-tt-pisa_wrong_textures_1600.png">
-  <div class="figcaption"><br>Car model with wrong texture coordinates and missing shadows<br>
-  </div>
+  <img src="/post_assets/12/bloopers/6.png">
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/audi-tt-pisa.png">
-  <div class="figcaption"><br>Car model with less samples but correct shadows and textures, we can see the soft shadows created by the multisampling with different directions<br>
-  </div>
-</div>
-
-# Results
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/audi-tt-glacier.png">
-  <div class="figcaption"><br>Car model with a different environmental map, the difference is huge<br>
-  </div>
+  <img src="/post_assets/12/bloopers/7.png">
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/glass_sphere_env.png">
-  <div class="figcaption"><br>Glass sphere with an environmental map<br>
-  </div>
+  <img src="/post_assets/12/bloopers/8.png">
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/mirror_sphere_env.png">
-  <div class="figcaption"><br>Mirror sphere with an environmental map<br>
-  </div>
+  <img src="/post_assets/12/bloopers/9.png">
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/mirror_sphere_env_no_tonemapping.png">
-  <div class="figcaption"><br>Mirror sphere with an environmental map without tonemapping<br>
-  </div>
+  <img src="/post_assets/12/bloopers/10.png">
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/sphere_point_hdr_texture.png">
-  <div class="figcaption"><br>Sphere with a point light and an environmental map<br>
-  </div>
+  <img src="/post_assets/12/bloopers/11.png">
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/11/sphere_env_light.png">
-  <div class="figcaption"><br>Sphere with an environmental map<br>
-  </div>
+  <img src="/post_assets/12/bloopers/12.png">
 </div>
+
+# Future Work
+
+My main plan is to move these implementations on a GPU path tracer with DXR. In the end, I want to implement a path tracing suit with preview GPU renderer and a CPU renderer with more functionalities like volumetric rendering, Disney BRDFs, subsurface scattering, and more. Stay tuned for the next posts.
 
 # References
 
 Ahmet Oğuz Akyüz, Lecture Slides from CENG795 Advanced Ray Tracing, Middle East Technical University
-
-Reinhard, E., Stark, M., Shirley, P., & Ferwerda, J. (2002, July). Photographic tone reproduction for digital images. In Proceedings of the 29th annual conference on Computer graphics and interactive techniques (pp. 267-276). https://web.tecgraf.puc-rio.br/~scuri/inf1378/pub/reinhard.pdf
-
-High-Resolution Light Probe Image Gallery, https://vgl.ict.usc.edu/Data/HighResProbes/
 
