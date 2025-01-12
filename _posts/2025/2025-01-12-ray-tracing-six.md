@@ -230,7 +230,7 @@ If we apply transformations to the sphere lights, we can create different light 
   </div>
 </div>
 
-# Path Tracing With Monte Carlo
+# Path Tracing With Monte Carlo Integration
 
 To solve the rendering equation, we can use the Monte Carlo Integration, which is a simple way to estimate the integral of the rendering equation. We can sample the directions around the hemisphere, and we can calculate the radiance values for each sample, and we can average the radiance values to get the final radiance value. This way we can estimate the integral of the rendering equation, and we can get the final image.
 A thing to note is that we need to divide each sample with the probability of the sample, as we are using the Monte Carlo Integration, and we need to divide the sum of the samples with the sum of the probabilities of the samples to get the correct value. As the sample number increases, the radiance values will converge to the correct value, and we can get the final image.
