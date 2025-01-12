@@ -378,7 +378,7 @@ While implementing the path tracing, I encountered several problems producing so
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/bloopers/7.png">
-  <div class="figcaption"><br>Like the movie tron<br>
+  <div class="figcaption"><br>Like the movie Tron<br>
   </div>
 </div>
 
