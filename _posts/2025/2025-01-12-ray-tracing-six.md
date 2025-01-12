@@ -355,50 +355,55 @@ While implementing the path tracing, I encountered several problems producing so
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/bloopers/1.png">
+  <div class="figcaption"><br>We converged a little bit early<br>
+  </div>
 </div>
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/bloopers/2.png">
+  <div class="figcaption"><br>Like an alien abduction<br>
+  </div>
 </div>
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/bloopers/3.png">
+  <div class="figcaption"><br>Some neon vibes<br>
+  </div>
 </div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/12/bloopers/4.png">
-</div>
-
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/bloopers/5.png">
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/12/bloopers/6.png">
+  <div class="figcaption"><br>Neon vibes, but brighter<br>
+  </div>
 </div>
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/bloopers/7.png">
+  <div class="figcaption"><br>Like the movie tron<br>
+  </div>
 </div>
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/bloopers/8.png">
+  <div class="figcaption"><br>Could it be an cartoon shader?<br>
+  </div>
 </div>
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/bloopers/9.png">
+  <div class="figcaption"><br>Lost in the noise<br>
+  </div>
 </div>
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/bloopers/10.png">
-</div>
-
-<div class="fig figcenter fighighlight">
-  <img src="/post_assets/12/bloopers/11.png">
+  <div class="figcaption"><br>Fogs without additional cost<br>
+  </div>
 </div>
 
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/bloopers/12.png">
+  <div class="figcaption"><br>Light mesh in the glass seems suspicious<br>
+  </div>
 </div>
 
 # Future Work
