@@ -22,10 +22,12 @@ BRDFs are an important part of the ray tracing pipeline and rendering equation, 
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/12/brdf_heisphere.png">
+  <img src="/post_assets/12/brdf_hemisphere.png">
   <div class="figcaption"><br>BRDF hemisphere representation, each different BRDF introduces different distribution on the surface<br>
   </div>
 </div>
+
+When we move into the path tracing, we need to be sure that the integral of the BRDFs around the hemisphere is equal to 1.0, as the BRDFs are defined as the ratio of the outgoing radiance to the incoming radiance. This is important as we need to sample the directions around the hemisphere, and the sum of the probabilities of the directions should be equal to 1.0. Because if we exceed this value, as we increase the sample number with the Monte Carlo Integration, we can't converge to the correct value.
 
 In the normal versions of the Bling Phong and the Phong BRDF there is a cosine variable at the denominator, however this prevents the BRDFs to be normalized, as the integral of the BRDFs around the hemisphere should be equal to 1.0. To fix this, we can use the modified versions of these BRDFs, which can be normalized.
 
@@ -66,6 +68,12 @@ In the normal versions of the Bling Phong and the Phong BRDF there is a cosine v
 </div>
 
 <div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/killeroo_blinnphong.png">
+  <div class="figcaption"><br>Killeroo model with Bling Phong BRDF<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
   <img src="/post_assets/12/phong_brdf_eq.png">
   <div class="figcaption"><br>Phong BRDF equation<br>
   </div>
@@ -102,10 +110,9 @@ In the normal versions of the Bling Phong and the Phong BRDF there is a cosine v
 </div>
 
 
-
 <div class="fig figcenter fighighlight">
   <img src="/post_assets/12/torrance_sparrow_brdf_eq.png">
-  <div class="figcaption"><br>Torrance-Sparrow BRDF equation<br>
+  <div class="figcaption"><br>Torrance-Sparrow BRDF equation, F term is the Fresnel reflection term, D term is the micro-facet distribution term, G term comes from the shadowing and masking from the micro-facets<br>
   </div>
 </div>
 
@@ -115,29 +122,14 @@ In the normal versions of the Bling Phong and the Phong BRDF there is a cosine v
   </div>
 </div>
 
-
-
-
-
-
-
-
-## Phong BRDF
+killeroo_torrancesparrow.png
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/12/brdf_phong_original.png">
-  <div class="figcaption"><br>Phong BRDF with different shininess values<br>
+  <img src="/post_assets/12/killeroo_torrancesparrow.png">
+  <div class="figcaption"><br>Killeroo model with Torrance-Sparrow BRDF<br>
   </div>
 </div>
 
-
-
-## Torrance-Sparrow BRDF
-
-
-## Normalized BRDFs
-
-When we move into the path tracing, we need to be sure that the integral of the BRDFs around the hemisphere is equal to 1.0, as the BRDFs are defined as the ratio of the outgoing radiance to the incoming radiance. This is important as we need to sample the directions around the hemisphere, and the sum of the probabilities of the directions should be equal to 1.0. Because if we exceed this value, as we increase the sample number with the Monte Carlo Integration, we can't converge to the correct value.
 
 # Object Lights
 
@@ -145,7 +137,100 @@ Another thing we need to worry when we move to the path tracing is lights, until
 
 ## Sampling Points From Light Meshes
 
+We need to introduce a cumulative distribution function (CDF) to sample points from the light meshes, as we need to sample points from the light meshes with respect to the area of the triangles. To do this, we need to calculate the area of the light meshes triangles, and create a CDF from the area values. After that, we can sample a random point from the light meshes with respect to the CDF values. To find the triangle that the CDF value corresponds to, we can use binary search, as the CDF values are sorted, however in my implementation I didn't use binary search, as I used a simple for loop to find the triangle that the CDF value corresponds to because of the size of the light meshes.
+
+```cpp
+triangleAreasCDF.resize(triangles.size());
+for (uint32_t i = 0; i < triangles.size(); i++)
+{
+  triangleAreasCDF[i] = 0.0f;
+  for (uint32_t j = 0; j <= i; j++)
+    triangleAreasCDF[i] += triangleAreas[j];
+  triangleAreasCDF[i] /= totalArea;
+}
+
+//sampling triangle
+float r = frandom();
+uint32_t idx = 0;
+for (uint32_t i = 0; i < bvh->triangleAreasCDF.size(); i++)
+{
+  if (r < bvh->triangleAreasCDF[i])
+  {
+    idx = i;
+    break;
+  }
+}
+
+//sampling point from triangle
+const triangle& tri = bvh->triangles[idx];
+float r1 = frandom();
+float r2 = frandom();
+
+float sqrt_r1 = sqrt(r1);
+
+return tri.p1 * (1.0f - sqrt_r1) + tri.p2 * (sqrt_r1 * (1.0f - r2)) + tri.p3 * (sqrt_r1 * r2);
+```
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/cornellbox_jaroslav_diffuse_area.png">
+  <div class="figcaption"><br>Cornell box with a mesh light<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/cornellbox_jaroslav_glossy_area.png">
+  <div class="figcaption"><br>Cornell box with a mesh light, spheres with glossy surfaces<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/cornellbox_jaroslav_diffuse.png">
+  <div class="figcaption"><br>Cornell box with a point light for comparision<br>
+  </div>
+</div>
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/cornellbox_jaroslav_glossy_area_small.png">
+  <div class="figcaption"><br>Cornell box with a small mesh light, spheres with glossy surfaces<br>
+  </div>
+</div>
+
 ## Sampling Points From Light Spheres
+
+To sample from sphere lights, we can act a little bit smarter and we can sample from the point which are visible to the intersection point, we can find the maximum angle with the vector from the center of the sphere to the interscetion point, which will be the tangent of the sphere from the intersection point. After that we can create a orthogonal basis with the normal of the intersection point, and the vector from the center of the sphere to the intersection point, and we can sample a random point from the sphere with respect to the maximum tangent angle.
+
+```cpp
+float sin_theta_max = radius / glm::length(intersection - center);
+float cos_theta_max = std::sqrt(std::max(0.0f, 1.0f - sin_theta_max * sin_theta_max));
+
+//create a basis and sample a position
+vec3 wtheta = glm::normalize(center - intersection);
+vec3 np = create_non_colinear_vector(wtheta);
+vec3 u = glm::normalize(cross(wtheta, np));
+vec3 v = glm::normalize(cross(wtheta, u));
+
+float ch1 = frandom();
+float ch2 = frandom();
+
+float theta = std::acos(1.0f - ch1 + ch1 * cos_theta_max);
+float phi = 2.0f * pi * ch2;
+
+vec3 l = glm::normalize(u * std::cos(phi) * std::sin(theta) + v * std::sin(phi) * std::sin(theta) + wtheta * std::cos(theta));
+```
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/cornellbox_jaroslav_glossy_area_sphere.png">
+  <div class="figcaption"><br>Cornell box with a sphere light, spheres with glossy surfaces<br>
+  </div>
+</div>
+
+If we apply transformations to the sphere lights, we can create different light sources, like ellipsoids, or other shapes. This way we can create more complex light sources with simple shapes.
+
+<div class="fig figcenter fighighlight">
+  <img src="/post_assets/12/cornellbox_jaroslav_glossy_area_ellipsoid.png">
+  <div class="figcaption"><br>Cornell box with an ellipsoid light, spheres with glossy surfaces<br>
+  </div>
+</div>
 
 # Path Tracing With Monte Carlo
 
