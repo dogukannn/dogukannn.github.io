@@ -739,7 +739,7 @@ Ahmet Oğuz Akyüz, Lecture Slides from CENG795 Advanced Ray Tracing, Middle Eas
 
 Will Usher, The RTX Shader Binding Table, [https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways/](https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways/)
 
-Chris Wyman, Peter Shirley, Colin Barré-Brisebois, ACM SIGGRAPH 2018 Courses, Introduction to DirectX RayTracing (https://intro-to-dxr.cwyman.org)[https://intro-to-dxr.cwyman.org]
+Chris Wyman, Peter Shirley, Colin Barré-Brisebois, ACM SIGGRAPH 2018 Courses, Introduction to DirectX RayTracing [https://intro-to-dxr.cwyman.org](https://intro-to-dxr.cwyman.org)
 
 Shawn Hargreaves, Introduction to DirectX Raytracing, Part 2 - The API [https://intro-to-dxr.cwyman.org/presentations/IntroDXR_RaytracingAPI.pdf](https://intro-to-dxr.cwyman.org/presentations/IntroDXR_RaytracingAPI.pdf)
 
