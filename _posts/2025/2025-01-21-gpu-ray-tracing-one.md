@@ -13,7 +13,7 @@ In this post, I will introduce the DXR through porting my CPU based ray tracer i
 
 For the code and the project files, you can check [my repository on GitHub](https://github.com/dogukannn/dxr-pathtracer).
 
-To skip to the [results](#Results).
+Results are shown at the end of the post.
 
 # Initial Setup
 
