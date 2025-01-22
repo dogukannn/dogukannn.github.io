@@ -13,6 +13,8 @@ In this post, I will introduce the DXR through porting my CPU based ray tracer i
 
 For the code and the project files, you can check [my repository on GitHub](https://github.com/dogukannn/dxr-pathtracer).
 
+To skip to the [results](#Results).
+
 # Initial Setup
 
 For the initial setup I searched for some DXR examples online and found the [Microsoft's DXR samples](https://learn.microsoft.com/en-us/samples/microsoft/directx-graphics-samples/d3d12-raytracing-samples-win32/), which was a good enough starting point. I picked the basic lighting sample with a cube and a light source. 
@@ -669,31 +671,31 @@ The future of this project will include the optimization points with the DXR API
 # Results
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/13/RayTracer_bcRQDA2kbY.png">
+  <img src="/post_assets/13/RayTracer_bcRQDA2kbY.jpg">
   <div class="figcaption"><br>Final result of the ray tracer<br>
   </div>
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/13/screenshot_2025-01-19_171306.png">
+  <img src="/post_assets/13/Screenshot 2025-01-19 171306.png">
   <div class="figcaption"><br><br>
     </div>
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/13/screenshot_2025-01-20_022100.png">
+  <img src="/post_assets/13/Screenshot 2025-01-20 022100.png">
   <div class="figcaption"><br><br>
 </div>
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/13/screenshot_2025-01-20_022216.png">
+  <img src="/post_assets/13/Screenshot 2025-01-20 022216.png">
   <div class="figcaption"><br><br>
     </div>
 </div>
 
 <div class="fig figcenter fighighlight">
-  <img src="/post_assets/13/screenshot_2025-01-19_163921.png">
+  <img src="/post_assets/13/Screenshot 2025-01-19 163921.png">
   <div class="figcaption"><br>Buggy result from the initial try<br>
   </div>
 </div>
@@ -734,4 +736,12 @@ Your browser does not support the video tag.
 # References
 
 Ahmet Oğuz Akyüz, Lecture Slides from CENG795 Advanced Ray Tracing, Middle East Technical University
+
+Will Usher, The RTX Shader Binding Table, [https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways/](https://www.willusher.io/graphics/2019/11/20/the-sbt-three-ways/)
+
+Chris Wyman, Peter Shirley, Colin Barré-Brisebois, ACM SIGGRAPH 2018 Courses, Introduction to DirectX RayTracing (https://intro-to-dxr.cwyman.org)[https://intro-to-dxr.cwyman.org]
+
+Shawn Hargreaves, Introduction to DirectX Raytracing, Part 2 - The API [https://intro-to-dxr.cwyman.org/presentations/IntroDXR_RaytracingAPI.pdf](https://intro-to-dxr.cwyman.org/presentations/IntroDXR_RaytracingAPI.pdf)
+
+Seppe Dekeyser, Rendering Pixels, Getting Started with DirectX Raytracing [https://renderingpixels.com/2022/07/getting-started-with-directx-raytracing/](https://renderingpixels.com/2022/07/getting-started-with-directx-raytracing/)
 
